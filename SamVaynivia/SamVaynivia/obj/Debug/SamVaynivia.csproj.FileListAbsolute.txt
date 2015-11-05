@@ -1,0 +1,11 @@
+c:\VSPROJECTS\SamVaynivia\SamVaynivia\bin\Debug\SamVaynivia.exe.config
+c:\VSPROJECTS\SamVaynivia\SamVaynivia\bin\Debug\SamVaynivia.exe
+c:\VSPROJECTS\SamVaynivia\SamVaynivia\bin\Debug\SamVaynivia.pdb
+c:\VSPROJECTS\SamVaynivia\SamVaynivia\obj\Debug\SamVaynivia.csprojResolveAssemblyReference.cache
+c:\VSPROJECTS\SamVaynivia\SamVaynivia\obj\Debug\SamVaynivia.exe
+c:\VSPROJECTS\SamVaynivia\SamVaynivia\obj\Debug\SamVaynivia.pdb
+c:\VSPROJECTS\SamVaynivia\SamVaynivia\bin\Debug\EloBuddy.dll
+c:\VSPROJECTS\SamVaynivia\SamVaynivia\bin\Debug\EloBuddy.SDK.dll
+c:\VSPROJECTS\SamVaynivia\SamVaynivia\bin\Debug\SharpDX.dll
+c:\VSPROJECTS\SamVaynivia\SamVaynivia\bin\Debug\SharpDX.Direct3D9.dll
+c:\VSPROJECTS\SamVaynivia\SamVaynivia\bin\Debug\Newtonsoft.Json.dll
