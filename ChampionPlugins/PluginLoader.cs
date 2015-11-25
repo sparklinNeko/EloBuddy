@@ -16,6 +16,8 @@ namespace ChampionPlugins
         {
             //add them here
             {"Sivir", new Sivir()},
+            {"Tristana", new Tristana()},
+            {"Ashe", new Ashe()},
         };
 
         public static void Init()
