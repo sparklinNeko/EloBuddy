@@ -358,8 +358,8 @@ namespace AutoSharp.Auto.HowlingAbyss.ARAMShopAI
 
         public static string[] KogMaw =
         {
-            "Athene's Unholy Grail", "Rabadon's Deathcap",
-            "Sorcerer's Shoes", "Rod of Ages", "Nashor's Tooth", "Lich Bane",
+            "Infinity Edge", "The Bloodthirster",
+            "Berserker's Greaves", "Statikk Shiv", "Runaan's Hurricane (Ranged Only)", "Blade of the Ruined King"
         };
 
         public static string[] Leblanc =

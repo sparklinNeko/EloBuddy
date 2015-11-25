@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using AutoSharp.Plugins;
 using EloBuddy;
 
 namespace AutoSharp
@@ -12,8 +11,8 @@ namespace AutoSharp
         private static bool _loaded;
         public static Dictionary<string, Action> Plugins = new Dictionary<string, Action>()
         {
-            //add them here
-            {"Sivir", Sivir.Init},
+            // add them here
+            // made separate addon for plugins
         };
         public PluginLoader()
         {
