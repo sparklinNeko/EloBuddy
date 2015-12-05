@@ -8,10 +8,13 @@ namespace AutoSharp.Auto
     {
         public static void Load()
         {
-            switch (Game.MapId)
+            
+            var tempMap = GameMapId.HowlingAbyss;
+            switch (tempMap)
             {
                 case GameMapId.SummonersRift:
                 {
+                   
                     Game.OnUpdate += args => { MyTeam.Update(); };
                     SRManager.Load();
                     break;

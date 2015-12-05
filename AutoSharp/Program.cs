@@ -26,6 +26,7 @@ namespace AutoSharp
         {
             Chat.Print("AutoSharp loaded", Color.CornflowerBlue);
             Map = Game.MapId;
+            //Chat.Print(Map.ToString()); // Prints Summoners Rift on Howling Abbyss
             /*
             Config = new Menu("AutoSharp: " + ObjectManager.Player.ChampionName, "autosharp." + ObjectManager.Player.ChampionName, true);
             Config.AddItem(new MenuItem("autosharp.mode", "Mode").SetValue(new StringList(new[] {"AUTO", "SBTW"}))).ValueChanged +=
@@ -58,7 +59,8 @@ namespace AutoSharp
             randomizer.AddItem(new MenuItem("autosharp.randomizer.playdefensive", "Play Defensive?").SetValue(true));
             randomizer.AddItem(new MenuItem("autosharp.randomizer.auto", "Auto-Adjust? (ALPHA)").SetValue(true));
             */
-            new PluginLoader();
+            // Moved it to another addon: ChampionPlugins
+            //new PluginLoader();
             
                 Cache.Load(); 
                 Game.OnUpdate += Positioning.OnUpdate;
