@@ -52,7 +52,9 @@
   <ItemGroup>
     <Compile Include="PluginLoader.cs" />
     <Compile Include="Plugins\Ashe.cs" />
+    <Compile Include="Plugins\Ezreal.cs" />
     <Compile Include="Plugins\Plugin.cs" />
+    <Compile Include="Plugins\Ryze.cs" />
     <Compile Include="Plugins\Sivir.cs" />
     <Compile Include="Plugins\Tristana.cs" />
     <Compile Include="Program.cs" />

@@ -18,6 +18,8 @@ namespace ChampionPlugins
             {"Sivir", new Sivir()},
             {"Tristana", new Tristana()},
             {"Ashe", new Ashe()},
+            {"Ezreal", new Ezreal()},
+            {"Ryze", new Ryze()},
         };
 
         public static void Init()
