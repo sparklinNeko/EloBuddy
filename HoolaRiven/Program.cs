@@ -41,14 +41,15 @@ namespace HoolaRiven
         private static AttackableUnit QTarget;
         public static Item Hydra;
 
-        public static Spell.Active W
+        public static Spell.Active W = new Spell.Active(SpellSlot.W,(uint)(70 + ObjectManager.Player.BoundingRadius + 120));
+
+        public static uint WRange
         {
             get
             {
-                return new Spell.Active(SpellSlot.W,
-                    (uint)
+                return (uint)
                         (70 + ObjectManager.Player.BoundingRadius +
-                         (ObjectManager.Player.HasBuff("RivenFengShuiEngine") ? 195 : 120)));
+                         (ObjectManager.Player.HasBuff("RivenFengShuiEngine") ? 195 : 120));
             }
         }
 
@@ -546,15 +547,19 @@ namespace HoolaRiven
         {
             if (AutoW > 0)
             {
-                if (Player.CountEnemiesInRange(W.Range) >= AutoW)
+                if (Player.CountEnemiesInRange(WRange) >= AutoW)
                 {
                     ForceW();
                 }
             }
         }
 
+        private static int TickLimiter = 1;
+        private static int LastGameTick = 0;
         private static void OnTick(EventArgs args)
         {
+            if (LastGameTick + TickLimiter > Environment.TickCount) return;
+            LastGameTick = Environment.TickCount;
             /* Timer.X = (int) Drawing.WorldToScreen(Player.Position).X - 60;
             Timer.Y = (int) Drawing.WorldToScreen(Player.Position).Y + 43;
             Timer2.X = (int) Drawing.WorldToScreen(Player.Position).X - 60;
