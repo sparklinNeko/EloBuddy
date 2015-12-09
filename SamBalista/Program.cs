@@ -7,6 +7,8 @@ using EloBuddy.SDK.Constants;
 using EloBuddy.SDK.Events;
 using EloBuddy.SDK.Menu;
 using EloBuddy.SDK.Menu.Values;
+using EloBuddy.SDK.Rendering;
+using SharpDX;
 
 namespace SamBalista
 {
@@ -47,13 +49,18 @@ namespace SamBalista
 
         static void Drawing_OnEndScene(System.EventArgs args)
         {
-            if (!config["drawstatus"].Cast<CheckBox>().CurrentValue || _Player.IsDead) return;
-            bool active = config["pull"].Cast<KeyBind>().CurrentValue;
-            var heropos = _Player.Position.WorldToScreen();
-            Drawing.DrawText(heropos.X - 40, heropos.Y + 40, System.Drawing.Color.White, "Balista  (     )");
-            Drawing.DrawText(heropos.X + 17, heropos.Y + 40,
-                active ? System.Drawing.Color.LimeGreen : System.Drawing.Color.Red,
-                active ? "On" : "Off");
+            if (config["drawstatus"].Cast<CheckBox>().CurrentValue || _Player.IsDead)
+            {
+
+
+                bool active = config["pull"].Cast<KeyBind>().CurrentValue;
+                var heropos = _Player.Position.WorldToScreen();
+                Drawing.DrawText(heropos.X - 40, heropos.Y + 40, System.Drawing.Color.White, "Balista  (     )");
+                Drawing.DrawText(heropos.X + 17, heropos.Y + 40,
+                    active ? System.Drawing.Color.LimeGreen : System.Drawing.Color.Red,
+                    active ? "On" : "Off");
+            }
+            Circle.Draw(Color.White, config["minblitzdist"].Cast<Slider>().CurrentValue, ObjectManager.Player.Position);
 
         }
 
@@ -68,8 +75,10 @@ namespace SamBalista
             if (!pullHim.Cast<CheckBox>().CurrentValue 
                 || target.Distance(_Player) > 2450 
                 || Blitz.Distance(_Player) > R.Range 
-                || Blitz.Distance(_Player) < config["minblitzdist"].Cast<Slider>().CurrentValue
+                || Blitz.Distance(_Player) <= config["minblitzdist"].Cast<Slider>().CurrentValue
                 || !R.IsReady()) return;
+
+            Utils.Debug("DistanceToBlitz: " + Blitz.Distance(_Player)+"; MinDistance: "+config["minblitzdist"].Cast<Slider>().CurrentValue);
             Core.DelayAction(() => Player.CastSpell(SpellSlot.R), 1);
             
         }
