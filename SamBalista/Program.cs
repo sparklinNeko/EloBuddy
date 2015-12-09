@@ -60,7 +60,8 @@ namespace SamBalista
                     active ? System.Drawing.Color.LimeGreen : System.Drawing.Color.Red,
                     active ? "On" : "Off");
             }
-            Circle.Draw(Color.White, config["minblitzdist"].Cast<Slider>().CurrentValue, ObjectManager.Player.Position);
+            if (config["drawmindistance"].Cast<CheckBox>().CurrentValue)
+                Circle.Draw(Color.White, config["minblitzdist"].Cast<Slider>().CurrentValue, ObjectManager.Player.Position);
 
         }
 
@@ -95,6 +96,7 @@ namespace SamBalista
                 config.Add("pull"+h.ChampionName, new CheckBox(h.ChampionName)));
             config.AddGroupLabel("Drawings");
             config.Add("drawstatus", new CheckBox("Draw pull status"));
+            config.Add("drawmindistance", new CheckBox("Draw minimum distance between Blitz and Kalista status"));
         }
     }
 }
