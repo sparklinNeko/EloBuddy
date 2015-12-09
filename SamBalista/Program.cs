@@ -65,7 +65,11 @@ namespace SamBalista
             if (target == null || !target.IsEnemy) return;
             var pullHim = config["pull" + target.ChampionName];
             if (pullHim == null) return;
-            if (!pullHim.Cast<CheckBox>().CurrentValue || target.Distance(_Player) > 2450 || Blitz.Distance(_Player) > R.Range || !R.IsReady()) return;
+            if (!pullHim.Cast<CheckBox>().CurrentValue 
+                || target.Distance(_Player) > 2450 
+                || Blitz.Distance(_Player) > R.Range 
+                || Blitz.Distance(_Player) < config["minblitzdist"].Cast<Slider>().CurrentValue
+                || !R.IsReady()) return;
             Core.DelayAction(() => Player.CastSpell(SpellSlot.R), 1);
             
         }
@@ -75,6 +79,8 @@ namespace SamBalista
         {
             config = MainMenu.AddMenu("Sam Balista", "sambalista");
             config.Add("pull", new KeyBind("Pull Blitz", true, KeyBind.BindTypes.PressToggle, 'T'));
+            config.Add("minblitzdist",
+                new Slider("Minimum distance between Kalista and Blitz", 50, 0, (int)(R.Range - Blitz.BoundingRadius)));
             config.AddGroupLabel("Champions to pull");
             EntityManager.Heroes.Enemies.ForEach(h => 
                 config.Add("pull"+h.ChampionName, new CheckBox(h.ChampionName)));
