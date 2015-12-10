@@ -191,7 +191,7 @@ namespace HoolaRiven
 
         private static bool Qstrange
         {
-            get { return menu["Qstrange"].Cast<CheckBox>().CurrentValue; }
+            get { return false; } //menu["Qstrange"].Cast<CheckBox>().CurrentValue; }
         }
 
         private static bool FirstHydra
@@ -515,7 +515,7 @@ namespace HoolaRiven
 
 
             menu.Add("FirstHydra", new CheckBox("Flash Burst Hydra Cast before W", false));
-            menu.Add("Qstrange", new CheckBox("Reset animation for manual Q"));
+            //menu.Add("Qstrange", new CheckBox("Reset animation for manual Q"));
             menu.Add("Winterrupt", new CheckBox("W interrupt"));
             menu.Add("AutoW", new Slider("Use W on {0} Minion (0 = Don't)", 5, 0, 5));
             menu.Add("RMaxDam", new CheckBox("Use Second R Max Damage"));
