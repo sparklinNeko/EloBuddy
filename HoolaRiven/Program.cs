@@ -685,10 +685,11 @@ namespace HoolaRiven
                     UseHoola ? System.Drawing.Color.LimeGreen : System.Drawing.Color.Red,
                     UseHoola ? "On" : "Off");
             }
-            Drawing.DrawText(heropos.X - 40, heropos.Y + 43, System.Drawing.Color.DodgerBlue, "Can AA:");
-            Drawing.DrawText(heropos.X + 50, heropos.Y + 43,
-                    Orbwalker.CanAutoAttack ? System.Drawing.Color.LimeGreen : System.Drawing.Color.Red,
-                    Orbwalker.CanAutoAttack ? "true" : "false");
+            
+            //Drawing.DrawText(heropos.X - 40, heropos.Y + 43, System.Drawing.Color.DodgerBlue, "Can AA:");
+            //Drawing.DrawText(heropos.X + 50, heropos.Y + 43,
+            //        Orbwalker.CanAutoAttack ? System.Drawing.Color.LimeGreen : System.Drawing.Color.Red,
+            //        Orbwalker.CanAutoAttack ? "true" : "false");
         }
 
         private static void Jungleclear()
