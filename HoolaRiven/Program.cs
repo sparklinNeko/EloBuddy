@@ -19,7 +19,7 @@ namespace HoolaRiven
         private const string IsFirstR = "RivenFengShuiEngine";
         private const string IsSecondR = "rivenizunablade";
         public static Menu menu;
-        private static readonly AIHeroClient Player = ObjectManager.Player;
+        private static readonly AIHeroClient _Player = ObjectManager.Player;
         private static SpellDataInst Flash; //Player.GetSpellSlot("summonerFlash");
         public static Spell.Active Q = new Spell.Active(SpellSlot.Q);
         public static Spell.Active E = new Spell.Active(SpellSlot.E, 325);
@@ -119,6 +119,10 @@ namespace HoolaRiven
         {
             get { return menu["burst"].Cast<KeyBind>().CurrentValue; }
         }
+        private static bool FastHarassCombo
+        {
+            get { return menu["fastharass"].Cast<KeyBind>().CurrentValue; }
+        }
 
         private static bool AlwaysR
         {
@@ -216,7 +220,7 @@ namespace HoolaRiven
         private static void OnGameLoad(EventArgs args)
         {
             Hacks.RenderWatermark = false;
-            if (Player.ChampionName != "Riven") return;
+            if (_Player.ChampionName != "Riven") return;
             Flash = ObjectManager.Player.Spellbook.Spells.FirstOrDefault(a => a.Name.ToLower().Contains("summonerflash"));
             Chat.Print("Loaded Succesfully", Color.DodgerBlue);
 
@@ -270,7 +274,7 @@ namespace HoolaRiven
         private static readonly float _yOffset = 9;
         private static void Drawing_OnEndScene(EventArgs args)
         {
-            if (Player.IsDead)
+            if (_Player.IsDead)
                 return;
             if (!Dind) return;
             foreach (var aiHeroClient in EntityManager.Heroes.Enemies)
@@ -291,7 +295,7 @@ namespace HoolaRiven
 
         private static void OnDoCastLC(Obj_AI_Base Sender, GameObjectProcessSpellCastEventArgs args)
         {
-            if (Player.IsDead)
+            if (_Player.IsDead)
                 return;
             if (!Sender.IsMe || !args.SData.IsAutoAttack()) return;
             QTarget = (Obj_AI_Base) args.Target;
@@ -324,7 +328,7 @@ namespace HoolaRiven
                             (!W.IsReady() || (W.IsReady() && LaneW == 0) || Minions.Length < LaneW) &&
                             E.IsReady() && LaneE)
                         {
-                            EloBuddy.Player.CastSpell(SpellSlot.E, Minions[0].Position);
+                            Player.CastSpell(SpellSlot.E, Minions[0].Position);
                             Utils.DelayAction(ForceItem, 1);
                         }
                     }
@@ -348,7 +352,7 @@ namespace HoolaRiven
         //private static  => Items.CanUseItem(3077) && Items.HasItem(3077) ? 3077 : Items.CanUseItem(3074) && Items.HasItem(3074) ? 3074 : 0;
         private static void OnDoCast(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
         {
-            if (Player.IsDead)
+            if (_Player.IsDead)
                 return;
             //var spellName = args.SData.Name;
             if (!sender.IsMe || !args.SData.IsAutoAttack()) return;
@@ -383,7 +387,7 @@ namespace HoolaRiven
                             (!W.IsReady() || (W.IsReady() && LaneW == 0) || Minions.Length < LaneW) &&
                             E.IsReady() && LaneE)
                         {
-                            EloBuddy.Player.CastSpell(SpellSlot.E, Minions[0].Position);
+                            Player.CastSpell(SpellSlot.E, Minions[0].Position);
                             Utils.DelayAction(ForceItem, 1);
                         }
                     }
@@ -401,12 +405,12 @@ namespace HoolaRiven
                 var target = client;
                 if (!target.IsValidTarget()) return;
                 if (KillstealR && R.IsReady() && R.Name == IsSecondR)
-                    if (target.Health < (Rdame(target, target.Health) + Player.GetAutoAttackDamage(target)) &&
-                        target.Health > Player.GetAutoAttackDamage(target)) R.Cast(target.Position);
+                    if (target.Health < (Rdame(target, target.Health) + _Player.GetAutoAttackDamage(target)) &&
+                        target.Health > _Player.GetAutoAttackDamage(target)) R.Cast(target.Position);
                 if (KillstealW && W.IsReady())
                     if (target.Health <
-                        (Player.GetSpellDamage(target, SpellSlot.W)) + Player.GetAutoAttackDamage(target) &&
-                        target.Health > Player.GetAutoAttackDamage(target)) W.Cast();
+                        (_Player.GetSpellDamage(target, SpellSlot.W)) + _Player.GetAutoAttackDamage(target) &&
+                        target.Health > _Player.GetAutoAttackDamage(target)) W.Cast();
                 if (Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.Combo))
                 {
                     if (HasTitan())
@@ -424,11 +428,11 @@ namespace HoolaRiven
                         ForceItem();
                         Utils.DelayAction(ForceW, 1);
                     }
-                    else if (E.IsReady() && Player.IsInAutoAttackRange(target)) EloBuddy.Player.CastSpell(SpellSlot.E, target.Position);
+                    else if (E.IsReady() && _Player.IsInAutoAttackRange(target)) Player.CastSpell(SpellSlot.E, target.Position);
                 }
                 // todo: fast harass
-                /*
-                if (Orbwalker.ActiveModesFlags == Orbwalker.ActiveModes.FastHarass)
+                
+                if (FastHarassCombo)
                 {
                     if (HasTitan())
                     {
@@ -451,7 +455,7 @@ namespace HoolaRiven
                         EloBuddy.Player.CastSpell(SpellSlot.E, target.Position);
                     }
                 }
-                */
+                
 
                 if (Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.Harass))
                 {
@@ -511,7 +515,7 @@ namespace HoolaRiven
 
 
             menu.Add("FirstHydra", new CheckBox("Flash Burst Hydra Cast before W", false));
-            menu.Add("Qstrange", new CheckBox("Strange Q For Speed"));
+            menu.Add("Qstrange", new CheckBox("Reset animation for manual Q"));
             menu.Add("Winterrupt", new CheckBox("W interrupt"));
             menu.Add("AutoW", new Slider("Use W on {0} Minion (0 = Don't)", 5, 0, 5));
             menu.Add("RMaxDam", new CheckBox("Use Second R Max Damage"));
@@ -539,14 +543,14 @@ namespace HoolaRiven
             menu.AddGroupLabel("Additional Keys");
 
             menu.Add("burst", new KeyBind("Shy burst", false, KeyBind.BindTypes.HoldActive, 'T'));
-
+            menu.Add("fastharass", new KeyBind("Fast Harass", false, KeyBind.BindTypes.HoldActive, 'N'));
         }
 
         private static void Interrupt(AIHeroClient sender, EventArgs args)
         {
             if (sender.IsEnemy && W.IsReady() && sender.IsValidTarget() && !sender.IsZombie && WInterrupt)
             {
-                if (sender.IsValidTarget(125 + Player.BoundingRadius + sender.BoundingRadius)) W.Cast();
+                if (sender.IsValidTarget(125 + _Player.BoundingRadius + sender.BoundingRadius)) W.Cast();
             }
         }
 
@@ -554,7 +558,7 @@ namespace HoolaRiven
         {
             if (AutoW > 0)
             {
-                if (Player.CountEnemiesInRange(WRange) >= AutoW)
+                if (_Player.CountEnemiesInRange(WRange) >= AutoW)
                 {
                     ForceW();
                 }
@@ -565,31 +569,35 @@ namespace HoolaRiven
         private static int LastGameTick = 0;
         private static void OnTick(EventArgs args)
         {
-            if (Player.IsDead)
+            if (_Player.IsDead)
                 return;
-            ForceSkill();
-            if (BurstCombo) Burst();
             
-            if (Orbwalker.ActiveModesFlags == Orbwalker.ActiveModes.None) return;
+            
+            
+            if (Orbwalker.ActiveModesFlags == Orbwalker.ActiveModes.None
+                && !FastHarassCombo
+                && !BurstCombo) return;
             /*if (LastGameTick + TickLimiter > Environment.TickCount) return;
             LastGameTick = Environment.TickCount;*/
             /* Timer.X = (int) Drawing.WorldToScreen(Player.Position).X - 60;
             Timer.Y = (int) Drawing.WorldToScreen(Player.Position).Y + 43;
             Timer2.X = (int) Drawing.WorldToScreen(Player.Position).X - 60;
             Timer2.Y = (int) Drawing.WorldToScreen(Player.Position).Y + 65;*/
-            
+            ForceSkill();
             UseRMaxDam();
             AutoUseW();
             Killsteal();
-
+            if (BurstCombo) Burst();
+            if (FastHarassCombo) FastHarass();
             if (Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.Combo)) Combo();
             if (Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.LaneClear)) Jungleclear();
             if (Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.Harass)) Harass();
+            
             //if (Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.)) FastHarass();
             
             if (Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.Flee)) Flee();
-            if (Environment.TickCount - LastQ >= 3650 && QStack != 1 && !Player.IsRecalling() && KeepQ && Q.IsReady())
-                EloBuddy.Player.CastSpell(SpellSlot.Q, Game.CursorPos); //Game.CursorPosition
+            if (Environment.TickCount - LastQ >= 3650 && QStack != 1 && !_Player.IsRecalling() && KeepQ && Q.IsReady())
+                Player.CastSpell(SpellSlot.Q, Game.CursorPos); //Game.CursorPosition
         }
 
         private static void Killsteal()
@@ -599,7 +607,7 @@ namespace HoolaRiven
                 var targets = EntityManager.Heroes.Enemies.Where(x => x.IsValidTarget(R.Range) && !x.IsZombie);
                 foreach (var target in targets)
                 {
-                    if (target.Health < Player.GetSpellDamage(target, SpellSlot.W) && InWRange(target))
+                    if (target.Health < _Player.GetSpellDamage(target, SpellSlot.W) && InWRange(target))
                         W.Cast();
                 }
             }
@@ -634,7 +642,7 @@ namespace HoolaRiven
         private static void Drawing_OnDraw(EventArgs args)
         {
             //temp
-            if (Player.IsDead)
+            if (_Player.IsDead)
                 return;
             var heropos = Drawing.WorldToScreen(ObjectManager.Player.Position);
 
@@ -655,11 +663,11 @@ namespace HoolaRiven
             var green = Color.LimeGreen;
             var red = Color.IndianRed;
             if (DrawCB)
-                Circle.Draw(E.IsReady() ? green : red, 250 + Player.AttackRange + 70, ObjectManager.Player.Position);
+                Circle.Draw(E.IsReady() ? green : red, 250 + _Player.AttackRange + 70, ObjectManager.Player.Position);
             if (DrawBT && Flash != null && Flash.Slot != SpellSlot.Unknown)
                 Circle.Draw(R.IsReady() && Flash.IsReady ? green : red, 800, ObjectManager.Player.Position);
             if (DrawFH)
-                Circle.Draw(E.IsReady() && Q.IsReady() ? green : red, 450 + Player.AttackRange + 70,
+                Circle.Draw(E.IsReady() && Q.IsReady() ? green : red, 450 + _Player.AttackRange + 70,
                     ObjectManager.Player.Position);
             if (DrawHS)
                 Circle.Draw(Q.IsReady() && W.IsReady() ? green : red, 400, ObjectManager.Player.Position);
@@ -677,6 +685,10 @@ namespace HoolaRiven
                     UseHoola ? System.Drawing.Color.LimeGreen : System.Drawing.Color.Red,
                     UseHoola ? "On" : "Off");
             }
+            Drawing.DrawText(heropos.X - 40, heropos.Y + 43, System.Drawing.Color.DodgerBlue, "Can AA:");
+            Drawing.DrawText(heropos.X + 50, heropos.Y + 43,
+                    Orbwalker.CanAutoAttack ? System.Drawing.Color.LimeGreen : System.Drawing.Color.Red,
+                    Orbwalker.CanAutoAttack ? "true" : "false");
         }
 
         private static void Jungleclear()
@@ -684,29 +696,44 @@ namespace HoolaRiven
             //temp
             var Mobs =
                 EntityManager.MinionsAndMonsters.Monsters.Where(
-                    m => m.Distance(ObjectManager.Player) < 250 + Player.AttackRange + 70).OrderBy(m => m.MaxHealth);
+                    m => m.Distance(ObjectManager.Player) < 250 + _Player.AttackRange + 70).OrderBy(m => m.MaxHealth);
 
             if (!Mobs.Any())
                 return;
             var mob = Mobs.First();
-            if (W.IsReady() && E.IsReady() && ObjectManager.Player.IsInAutoAttackRange(mob))
+            if (W.IsReady(200) && E.IsReady(1) && ObjectManager.Player.IsInAutoAttackRange(mob))
             {
-                EloBuddy.Player.CastSpell(SpellSlot.E, mob.Position);
+                Player.CastSpell(SpellSlot.E, mob.Position);
                 Utils.DelayAction(ForceItem, 1);
                 Utils.DelayAction(ForceW, 200);
+
             }
+            else
+            {
+                if (Q.IsReady())
+                {
+                    Utils.DelayAction(() => ForceCastQ(mob), 1);
+                }
+            }
+            
+            
             
         }
 
         private static void Combo()
         {
-            var targetR = TargetSelector.GetTarget(250 + Player.AttackRange + 70, DamageType.Physical);
+            var targetR = TargetSelector.GetTarget(250 + _Player.AttackRange + 70, DamageType.Physical);
             if (targetR == null || !targetR.IsValidTarget()) return;
             if (R.IsReady() && R.Name == IsFirstR && ObjectManager.Player.IsInAutoAttackRange(targetR) && AlwaysR)
+            {
                 ForceR();
+                CastR1();
+            }
+                
             if (R.IsReady() && R.Name == IsFirstR && W.IsReady() && InWRange(targetR) && ComboW && AlwaysR)
             {
                 ForceR();
+                CastR1();
                 Utils.DelayAction(ForceW, 1);
             }
             if (W.IsReady() && InWRange(targetR) && ComboW) W.Cast();
@@ -715,7 +742,7 @@ namespace HoolaRiven
             {
                 if (!InWRange(targetR))
                 {
-                    EloBuddy.Player.CastSpell(SpellSlot.E, targetR.Position);
+                    Player.CastSpell(SpellSlot.E, targetR.Position);
                     ForceR();
                     Utils.DelayAction(ForceW, 200);
                     Utils.DelayAction(() => ForceCastQ(targetR), 200);
@@ -727,7 +754,7 @@ namespace HoolaRiven
             {
                 if (!InWRange(targetR))
                 {
-                    EloBuddy.Player.CastSpell(SpellSlot.E, targetR.Position);
+                    Player.CastSpell(SpellSlot.E, targetR.Position);
                     ForceR();
                     Utils.DelayAction(ForceW, 200);
                 }
@@ -736,7 +763,7 @@ namespace HoolaRiven
             {
                 if (targetR.IsValidTarget() && !targetR.IsZombie && !InWRange(targetR))
                 {
-                    EloBuddy.Player.CastSpell(SpellSlot.E, targetR.Position);
+                    Player.CastSpell(SpellSlot.E, targetR.Position);
                     Utils.DelayAction(CastYoumoo, 1);
                     Utils.DelayAction(ForceItem, 10);
                     Utils.DelayAction(ForceW, 200);
@@ -747,7 +774,7 @@ namespace HoolaRiven
             {
                 if (targetR.IsValidTarget() && !targetR.IsZombie && !InWRange(targetR))
                 {
-                    EloBuddy.Player.CastSpell(SpellSlot.E, targetR.Position);
+                    Player.CastSpell(SpellSlot.E, targetR.Position);
                     Utils.DelayAction(CastYoumoo, 1);
                     Utils.DelayAction(ForceItem, 10);
                     Utils.DelayAction(ForceW, 240);
@@ -757,7 +784,7 @@ namespace HoolaRiven
             {
                 if (targetR.IsValidTarget() && !targetR.IsZombie && !InWRange(targetR))
                 {
-                    EloBuddy.Player.CastSpell(SpellSlot.E, targetR.Position);
+                    Player.CastSpell(SpellSlot.E, targetR.Position);
                 }
             }
         }
@@ -771,37 +798,37 @@ namespace HoolaRiven
             if (target.IsValidTarget() && !target.IsZombie)
             {
                 if (R.IsReady() && R.Name == IsFirstR && W.IsReady() && E.IsReady() &&
-                    Player.Distance(target.Position) <= 250 + 70 + Player.AttackRange)
+                    _Player.Distance(target.Position) <= 250 + 70 + _Player.AttackRange)
                 {
-                    EloBuddy.Player.CastSpell(SpellSlot.E, target.Position);
+                    Player.CastSpell(SpellSlot.E, target.Position);
                     CastYoumoo();
                     ForceR();
                     Utils.DelayAction(ForceW, 100);
                 }
                 else if (R.IsReady() && R.Name == IsFirstR && E.IsReady() && W.IsReady() && Q.IsReady() &&
-                         Player.Distance(target.Position) <= 400 + 70 + Player.AttackRange)
+                         _Player.Distance(target.Position) <= 400 + 70 + _Player.AttackRange)
                 {
                     CastYoumoo();
-                    EloBuddy.Player.CastSpell(SpellSlot.E, target.Position);
+                    Player.CastSpell(SpellSlot.E, target.Position);
                     ForceR();
                     Utils.DelayAction(() => ForceCastQ(target), 150);
                     Utils.DelayAction(ForceW, 160);
                 }
                 else if (Flash.IsReady
-                         && R.IsReady() && R.Name == IsFirstR && (Player.Distance(target.Position) <= 800) &&
+                         && R.IsReady() && R.Name == IsFirstR && (_Player.Distance(target.Position) <= 800) &&
                          (!FirstHydra || HasHydra() == null || !HasHydra().IsReady() ))
                     
                 {
-                    EloBuddy.Player.CastSpell(SpellSlot.E, target.Position);
+                    Player.CastSpell(SpellSlot.E, target.Position);
                     CastYoumoo();
                     ForceR();
                     Utils.DelayAction(FlashW, 180);
                 }
                 else if (Flash.IsReady
                          && R.IsReady() && E.IsReady() && W.IsReady() && R.Name == IsFirstR &&
-                         (Player.Distance(target.Position) <= 800) && FirstHydra && HasHydra() != null)
+                         (_Player.Distance(target.Position) <= 800) && FirstHydra && HasHydra() != null)
                 {
-                    EloBuddy.Player.CastSpell(SpellSlot.E, target.Position);
+                    Player.CastSpell(SpellSlot.E, target.Position);
                     ForceR();
                     Utils.DelayAction(ForceItem, 100);
                     Utils.DelayAction(FlashW, 210);
@@ -811,11 +838,17 @@ namespace HoolaRiven
 
         private static void FastHarass()
         {
+            var target = TargetSelector.SelectedTarget;
+
+            if (target == null || !target.IsValidTarget()) target = TargetSelector.GetTarget(450 + _Player.AttackRange + 70, DamageType.Physical);
+            if (target == null || !target.IsValidTarget()) return;
+            Orbwalker.ForcedTarget = target;
+            Orbwalker.OrbwalkTo(target.ServerPosition);
             if (Q.IsReady() && E.IsReady())
             {
-                var target = TargetSelector.GetTarget(450 + Player.AttackRange + 70, DamageType.Physical);
+                
                 if (!target.IsValidTarget() || target.IsZombie) return;
-                if (!ObjectManager.Player.IsInAutoAttackRange(target) && !InWRange(target)) EloBuddy.Player.CastSpell(SpellSlot.E, target.Position);
+                if (!ObjectManager.Player.IsInAutoAttackRange(target) && !InWRange(target)) Player.CastSpell(SpellSlot.E, target.Position);
                 Utils.DelayAction(ForceItem, 10);
                 Utils.DelayAction(() => ForceCastQ(target), 170);
             }
@@ -835,10 +868,10 @@ namespace HoolaRiven
             }
             if (Q.IsReady() && E.IsReady() && QStack == 3 && !Orbwalker.CanAutoAttack && Orbwalker.CanMove)
             {
-                var epos = Player.ServerPosition +
-                           (Player.ServerPosition - target.ServerPosition).Normalized()*300;
-                EloBuddy.Player.CastSpell(SpellSlot.E, epos);
-                Utils.DelayAction(() => EloBuddy.Player.CastSpell(SpellSlot.Q, epos), 190);
+                var epos = _Player.ServerPosition +
+                           (_Player.ServerPosition - target.ServerPosition).Normalized()*300;
+                Player.CastSpell(SpellSlot.E, epos);
+                Utils.DelayAction(() => Player.CastSpell(SpellSlot.Q, epos), 190);
             }
         }
 
@@ -848,15 +881,15 @@ namespace HoolaRiven
                 EntityManager.Heroes.Enemies.Where(
                     hero =>
                         hero.IsValidTarget(WRange) && W.IsReady());
-            var x = Player.Position.Extend(Game.CursorPos, 300);
+            var x = _Player.Position.Extend(Game.CursorPos, 300);
             if (W.IsReady() && enemy.Any()) W.Cast();
-            if (Q.IsReady() && !Player.IsDashing()) EloBuddy.Player.CastSpell(SpellSlot.Q, Game.CursorPos);
-            if (E.IsReady() && !Player.IsDashing()) EloBuddy.Player.CastSpell(SpellSlot.E, x.To3D());
+            if (Q.IsReady() && !_Player.IsDashing()) Player.CastSpell(SpellSlot.Q, Game.CursorPos);
+            if (E.IsReady() && !_Player.IsDashing()) Player.CastSpell(SpellSlot.E, x.To3D());
         }
 
         private static void OnPlay(Obj_AI_Base sender, GameObjectPlayAnimationEventArgs args)
         {
-            if (Player.IsDead)
+            if (_Player.IsDead)
                 return;
             if (!sender.IsMe) return;
 
@@ -864,34 +897,33 @@ namespace HoolaRiven
             {
                 case "Spell1a":
                     LastQ = Environment.TickCount;
-
-                    if (Qstrange && Orbwalker.ActiveModesFlags != Orbwalker.ActiveModes.None)  EloBuddy.Player.DoEmote(Emote.Dance);
+                    if (Qstrange && (Orbwalker.ActiveModesFlags != Orbwalker.ActiveModes.None))  Player.DoEmote(Emote.Dance);
                     QStack = 2;
-                    if (Orbwalker.ActiveModesFlags != Orbwalker.ActiveModes.None &&
+                    if (BurstCombo || Orbwalker.ActiveModesFlags != Orbwalker.ActiveModes.None &&
                         Orbwalker.ActiveModesFlags != Orbwalker.ActiveModes.LastHit &&
                         Orbwalker.ActiveModesFlags != Orbwalker.ActiveModes.Flee)
                         Utils.DelayAction(Reset, (QD*10) + 1);
                     break;
                 case "Spell1b":
                     LastQ = Environment.TickCount;
-                    if (Qstrange && Orbwalker.ActiveModesFlags != Orbwalker.ActiveModes.None)  EloBuddy.Player.DoEmote(Emote.Dance);
+                    if (Qstrange && (Orbwalker.ActiveModesFlags != Orbwalker.ActiveModes.None)) Player.DoEmote(Emote.Dance);
                     QStack = 3;
-                    if (Orbwalker.ActiveModesFlags != Orbwalker.ActiveModes.None &&
+                    if (BurstCombo || Orbwalker.ActiveModesFlags != Orbwalker.ActiveModes.None &&
                         Orbwalker.ActiveModesFlags != Orbwalker.ActiveModes.LastHit &&
                         Orbwalker.ActiveModesFlags != Orbwalker.ActiveModes.Flee)
                         Utils.DelayAction(Reset, (QD*10) + 1);
                     break;
                 case "Spell1c":
                     LastQ = Environment.TickCount;
-                    if (Qstrange && Orbwalker.ActiveModesFlags != Orbwalker.ActiveModes.None)  EloBuddy.Player.DoEmote(Emote.Dance);
+                    if (Qstrange && (Orbwalker.ActiveModesFlags != Orbwalker.ActiveModes.None )) Player.DoEmote(Emote.Dance);
                     QStack = 1;
-                    if (Orbwalker.ActiveModesFlags != Orbwalker.ActiveModes.None &&
+                    if (BurstCombo || Orbwalker.ActiveModesFlags != Orbwalker.ActiveModes.None &&
                         Orbwalker.ActiveModesFlags != Orbwalker.ActiveModes.LastHit &&
                         Orbwalker.ActiveModesFlags != Orbwalker.ActiveModes.Flee)
                         Utils.DelayAction(Reset, (QLD*10) + 3);
                     break;
                 case "Spell3":
-                    if ((//Orbwalker.ActiveModesFlags == Orbwalker.ActiveModes.Burst ||
+                    if ((BurstCombo ||//Orbwalker.ActiveModesFlags == Orbwalker.ActiveModes.Burst ||
                          Orbwalker.ActiveModesFlags == Orbwalker.ActiveModes.Combo ||
                          //Orbwalker.ActiveModesFlags == Orbwalker.ActiveModes.FastHarass ||
                          Orbwalker.ActiveModesFlags == Orbwalker.ActiveModes.Flee) && Youmu) CastYoumoo();
@@ -901,14 +933,23 @@ namespace HoolaRiven
                     break;
                 case "Spell4b":
                     var target = TargetSelector.SelectedTarget;
-                    if (target != null && Q.IsReady() && target.IsValidTarget()) ForceCastQ(target);
+
+                    if (target == null || !target.IsValidTarget()) target = TargetSelector.GetTarget(450 + _Player.AttackRange + 70, DamageType.Physical);
+                    if (target == null || !target.IsValidTarget()) return;
+                    if (Q.IsReady() && target.IsValidTarget()) ForceCastQ(target);
                     break;
+                case "Dance":
+                    //var delay = 10;
+                    //if (LastQ < Environment.TickCount)
+                        Orbwalker.ResetAutoAttack();
+                    break;
+                //Chat.Print(args.Animation);
             }
         }
 
         private static void OnCast(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
         {
-            if (Player.IsDead)
+            if (_Player.IsDead)
                 return;
             if (!sender.IsMe) return;
 
@@ -922,16 +963,16 @@ namespace HoolaRiven
         private static void Reset()
         {
             
-            EloBuddy.Player.DoEmote(Emote.Dance);
-            Orbwalker.ResetAutoAttack();
+            Player.DoEmote(Emote.Dance);
+            //Orbwalker.ResetAutoAttack();
         }
 
         private static bool InWRange(GameObject target)
         {
             if (target == null || !target.IsValid) return false;
-            return (Player.HasBuff("RivenFengShuiEngine"))
-            ? 330 >= Player.Distance(target.Position)
-            : 265 >= Player.Distance(target.Position);
+            return (_Player.HasBuff("RivenFengShuiEngine"))
+            ? 330 >= _Player.Distance(target.Position)
+            : 265 >= _Player.Distance(target.Position);
             
         }
 
@@ -939,19 +980,28 @@ namespace HoolaRiven
         private static void ForceSkill()
         {
             if (QTarget == null || !QTarget.IsValidTarget()) return;
-            if (forceQ && QTarget != null && QTarget.IsValidTarget(E.Range + Player.BoundingRadius + 70) && Q.IsReady())
-                EloBuddy.Player.CastSpell(SpellSlot.Q, ((Obj_AI_Base)QTarget).ServerPosition);
+            if (forceQ && QTarget != null && QTarget.IsValidTarget(E.Range + _Player.BoundingRadius + 70) && Q.IsReady())
+                Player.CastSpell(SpellSlot.Q, ((Obj_AI_Base)QTarget).ServerPosition);
             if (forceW) W.Cast();
-            if (forceR && R.Name == IsFirstR) EloBuddy.Player.CastSpell(SpellSlot.R);
+            if (forceR && R.Name == IsFirstR) CastR1(1);//EloBuddy.Player.CastSpell(SpellSlot.R);
             var hydra = HasHydra();
             if (forceItem && hydra != null && hydra.IsReady()) hydra.Cast();
             if (forceR2 && R.Name == IsSecondR)
             {
                 var target = TargetSelector.SelectedTarget;
-                if (target != null && target.IsValidTarget()) R.Cast(target);
+
+                if (target == null || !target.IsValidTarget()) target = TargetSelector.GetTarget(450 + _Player.AttackRange + 70, DamageType.Physical);
+                if (target == null || !target.IsValidTarget()) return;
+                R.Cast(target);
             }
         }
 
+        private static void CastR1(int delay = 0)
+        {
+            Chat.Print("Casting R1");
+  
+            Player.CastSpell(SpellSlot.R);
+        }
         private static void ForceItem()
         {
             var hydra = HasHydra();
@@ -962,7 +1012,7 @@ namespace HoolaRiven
         private static void ForceR()
         {
             forceR = (R.IsReady() && R.Name == IsFirstR);
-            Utils.DelayAction(() => forceR = false, 500);
+            Utils.DelayAction(() => forceR = false, 700);
         }
 
         private static void ForceR2()
@@ -990,7 +1040,7 @@ namespace HoolaRiven
             if (target != null && target.IsValidTarget() && !target.IsZombie)
             {
                 W.Cast();
-                Utils.DelayAction(() => Player.Spellbook.CastSpell(Flash.Slot, target.Position), 10);
+                Utils.DelayAction(() => _Player.Spellbook.CastSpell(Flash.Slot, target.Position), 10);
             }
         }
 
@@ -1004,22 +1054,22 @@ namespace HoolaRiven
 
         private static void OnCasting(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
         {
-            if (!sender.IsEnemy || sender.Type != Player.Type ||
+            if (!sender.IsEnemy || sender.Type != _Player.Type ||
                 (!AutoShield && (!Shield || Orbwalker.ActiveModesFlags != Orbwalker.ActiveModes.LastHit))) return;
-            var epos = Player.ServerPosition +
-                       (Player.ServerPosition - sender.ServerPosition).Normalized()*300;
+            var epos = _Player.ServerPosition +
+                       (_Player.ServerPosition - sender.ServerPosition).Normalized()*300;
 
-            if (!(Player.Distance(sender.ServerPosition) <= args.SData.CastRange)) return;
+            if (!(_Player.Distance(sender.ServerPosition) <= args.SData.CastRange)) return;
             switch (args.SData.TargettingType)
             {
                 case SpellDataTargetType.Unit:
 
-                    if (args.Target.NetworkId == Player.NetworkId)
+                    if (args.Target.NetworkId == _Player.NetworkId)
                     {
                         if (Orbwalker.ActiveModesFlags == Orbwalker.ActiveModes.LastHit &&
                             !args.SData.Name.Contains("NasusW"))
                         {
-                            if (E.IsReady()) EloBuddy.Player.CastSpell(SpellSlot.E, epos);
+                            if (E.IsReady()) Player.CastSpell(SpellSlot.E, epos);
                         }
                     }
 
@@ -1028,159 +1078,159 @@ namespace HoolaRiven
 
                     if (Orbwalker.ActiveModesFlags == Orbwalker.ActiveModes.LastHit)
                     {
-                        if (E.IsReady()) EloBuddy.Player.CastSpell(SpellSlot.E, epos);
+                        if (E.IsReady()) Player.CastSpell(SpellSlot.E, epos);
                     }
 
                     break;
             }
             if (args.SData.Name.Contains("IreliaEquilibriumStrike"))
             {
-                if (args.Target.NetworkId == Player.NetworkId)
+                if (args.Target.NetworkId == _Player.NetworkId)
                 {
                     if (W.IsReady() && InWRange(sender)) W.Cast();
-                    else if (E.IsReady()) EloBuddy.Player.CastSpell(SpellSlot.E, epos);
+                    else if (E.IsReady()) Player.CastSpell(SpellSlot.E, epos);
                 }
             }
             if (args.SData.Name.Contains("TalonCutthroat"))
             {
-                if (args.Target.NetworkId == Player.NetworkId)
+                if (args.Target.NetworkId == _Player.NetworkId)
                 {
                     if (W.IsReady()) W.Cast();
                 }
             }
             if (args.SData.Name.Contains("RenektonPreExecute"))
             {
-                if (args.Target.NetworkId == Player.NetworkId)
+                if (args.Target.NetworkId == _Player.NetworkId)
                 {
                     if (W.IsReady()) W.Cast();
                 }
             }
             if (args.SData.Name.Contains("GarenRPreCast"))
             {
-                if (args.Target.NetworkId == Player.NetworkId)
+                if (args.Target.NetworkId == _Player.NetworkId)
                 {
-                    if (E.IsReady()) EloBuddy.Player.CastSpell(SpellSlot.E, epos);
+                    if (E.IsReady()) Player.CastSpell(SpellSlot.E, epos);
                 }
             }
             if (args.SData.Name.Contains("GarenQAttack"))
             {
-                if (args.Target.NetworkId == Player.NetworkId)
+                if (args.Target.NetworkId == _Player.NetworkId)
                 {
-                    if (E.IsReady()) EloBuddy.Player.CastSpell(SpellSlot.E, Game.CursorPos);
+                    if (E.IsReady()) Player.CastSpell(SpellSlot.E, Game.CursorPos);
                 }
             }
             if (args.SData.Name.Contains("XenZhaoThrust3"))
             {
-                if (args.Target.NetworkId == Player.NetworkId)
+                if (args.Target.NetworkId == _Player.NetworkId)
                 {
                     if (W.IsReady()) W.Cast();
                 }
             }
             if (args.SData.Name.Contains("RengarQ"))
             {
-                if (args.Target.NetworkId == Player.NetworkId)
+                if (args.Target.NetworkId == _Player.NetworkId)
                 {
-                    if (E.IsReady()) EloBuddy.Player.CastSpell(SpellSlot.E, Game.CursorPos);
+                    if (E.IsReady()) Player.CastSpell(SpellSlot.E, Game.CursorPos);
                 }
             }
             if (args.SData.Name.Contains("RengarPassiveBuffDash"))
             {
-                if (args.Target.NetworkId == Player.NetworkId)
+                if (args.Target.NetworkId == _Player.NetworkId)
                 {
-                    if (E.IsReady()) EloBuddy.Player.CastSpell(SpellSlot.E, Game.CursorPos);
+                    if (E.IsReady()) Player.CastSpell(SpellSlot.E, Game.CursorPos);
                 }
             }
             if (args.SData.Name.Contains("RengarPassiveBuffDashAADummy"))
             {
-                if (args.Target.NetworkId == Player.NetworkId)
+                if (args.Target.NetworkId == _Player.NetworkId)
                 {
-                    if (E.IsReady()) EloBuddy.Player.CastSpell(SpellSlot.E, Game.CursorPos);
+                    if (E.IsReady()) Player.CastSpell(SpellSlot.E, Game.CursorPos);
                 }
             }
             if (args.SData.Name.Contains("TwitchEParticle"))
             {
-                if (args.Target.NetworkId == Player.NetworkId)
+                if (args.Target.NetworkId == _Player.NetworkId)
                 {
-                    if (E.IsReady()) EloBuddy.Player.CastSpell(SpellSlot.E, Game.CursorPos);
+                    if (E.IsReady()) Player.CastSpell(SpellSlot.E, Game.CursorPos);
                 }
             }
             if (args.SData.Name.Contains("FizzPiercingStrike"))
             {
-                if (args.Target.NetworkId == Player.NetworkId)
+                if (args.Target.NetworkId == _Player.NetworkId)
                 {
-                    if (E.IsReady()) EloBuddy.Player.CastSpell(SpellSlot.E, Game.CursorPos);
+                    if (E.IsReady()) Player.CastSpell(SpellSlot.E, Game.CursorPos);
                 }
             }
             if (args.SData.Name.Contains("HungeringStrike"))
             {
-                if (args.Target.NetworkId == Player.NetworkId)
+                if (args.Target.NetworkId == _Player.NetworkId)
                 {
-                    if (E.IsReady()) EloBuddy.Player.CastSpell(SpellSlot.E, Game.CursorPos);
+                    if (E.IsReady()) Player.CastSpell(SpellSlot.E, Game.CursorPos);
                 }
             }
             if (args.SData.Name.Contains("YasuoDash"))
             {
-                if (args.Target.NetworkId == Player.NetworkId)
+                if (args.Target.NetworkId == _Player.NetworkId)
                 {
-                    if (E.IsReady()) EloBuddy.Player.CastSpell(SpellSlot.E, Game.CursorPos);
+                    if (E.IsReady()) Player.CastSpell(SpellSlot.E, Game.CursorPos);
                 }
             }
             if (args.SData.Name.Contains("KatarinaRTrigger"))
             {
-                if (args.Target.NetworkId == Player.NetworkId)
+                if (args.Target.NetworkId == _Player.NetworkId)
                 {
                     if (W.IsReady() && InWRange(sender)) W.Cast();
-                    else if (E.IsReady()) EloBuddy.Player.CastSpell(SpellSlot.E, Game.CursorPos);
+                    else if (E.IsReady()) Player.CastSpell(SpellSlot.E, Game.CursorPos);
                 }
             }
             if (args.SData.Name.Contains("YasuoDash"))
             {
-                if (args.Target.NetworkId == Player.NetworkId)
+                if (args.Target.NetworkId == _Player.NetworkId)
                 {
-                    if (E.IsReady()) EloBuddy.Player.CastSpell(SpellSlot.E, Game.CursorPos);
+                    if (E.IsReady()) Player.CastSpell(SpellSlot.E, Game.CursorPos);
                 }
             }
             if (args.SData.Name.Contains("KatarinaE"))
             {
-                if (args.Target.NetworkId == Player.NetworkId)
+                if (args.Target.NetworkId == _Player.NetworkId)
                 {
                     if (W.IsReady()) W.Cast();
                 }
             }
             if (args.SData.Name.Contains("MonkeyKingQAttack"))
             {
-                if (args.Target.NetworkId == Player.NetworkId)
+                if (args.Target.NetworkId == _Player.NetworkId)
                 {
-                    if (E.IsReady()) EloBuddy.Player.CastSpell(SpellSlot.E, Game.CursorPos);
+                    if (E.IsReady()) Player.CastSpell(SpellSlot.E, Game.CursorPos);
                 }
             }
             if (args.SData.Name.Contains("MonkeyKingSpinToWin"))
             {
-                if (args.Target.NetworkId == Player.NetworkId)
+                if (args.Target.NetworkId == _Player.NetworkId)
                 {
-                    if (E.IsReady()) EloBuddy.Player.CastSpell(SpellSlot.E, Game.CursorPos);
+                    if (E.IsReady()) Player.CastSpell(SpellSlot.E, Game.CursorPos);
                     else if (W.IsReady()) W.Cast();
                 }
             }
             if (args.SData.Name.Contains("MonkeyKingQAttack"))
             {
-                if (args.Target.NetworkId == Player.NetworkId)
+                if (args.Target.NetworkId == _Player.NetworkId)
                 {
-                    if (E.IsReady()) EloBuddy.Player.CastSpell(SpellSlot.E, Game.CursorPos);
+                    if (E.IsReady()) Player.CastSpell(SpellSlot.E, Game.CursorPos);
                 }
             }
             if (args.SData.Name.Contains("MonkeyKingQAttack"))
             {
-                if (args.Target.NetworkId == Player.NetworkId)
+                if (args.Target.NetworkId == _Player.NetworkId)
                 {
-                    if (E.IsReady()) EloBuddy.Player.CastSpell(SpellSlot.E, Game.CursorPos);
+                    if (E.IsReady()) Player.CastSpell(SpellSlot.E, Game.CursorPos);
                 }
             }
             if (args.SData.Name.Contains("MonkeyKingQAttack"))
             {
-                if (args.Target.NetworkId == Player.NetworkId)
+                if (args.Target.NetworkId == _Player.NetworkId)
                 {
-                    if (E.IsReady()) EloBuddy.Player.CastSpell(SpellSlot.E, Game.CursorPos);
+                    if (E.IsReady()) Player.CastSpell(SpellSlot.E, Game.CursorPos);
                 }
             }
         }
@@ -1191,27 +1241,27 @@ namespace HoolaRiven
             {
                 double dmg = 0;
                 double passivenhan;
-                if (Player.Level >= 18)
+                if (_Player.Level >= 18)
                 {
                     passivenhan = 0.5;
                 }
-                else if (Player.Level >= 15)
+                else if (_Player.Level >= 15)
                 {
                     passivenhan = 0.45;
                 }
-                else if (Player.Level >= 12)
+                else if (_Player.Level >= 12)
                 {
                     passivenhan = 0.4;
                 }
-                else if (Player.Level >= 9)
+                else if (_Player.Level >= 9)
                 {
                     passivenhan = 0.35;
                 }
-                else if (Player.Level >= 6)
+                else if (_Player.Level >= 6)
                 {
                     passivenhan = 0.3;
                 }
-                else if (Player.Level >= 3)
+                else if (_Player.Level >= 3)
                 {
                     passivenhan = 0.25;
                 }
@@ -1219,15 +1269,15 @@ namespace HoolaRiven
                 {
                     passivenhan = 0.2;
                 }
-                if (HasHydra()!=null) dmg = dmg + Player.GetAutoAttackDamage(target)*0.7;
-                if (W.IsReady()) dmg = dmg + Player.GetSpellDamage(target, SpellSlot.W);
+                if (HasHydra()!=null) dmg = dmg + _Player.GetAutoAttackDamage(target)*0.7;
+                if (W.IsReady()) dmg = dmg + _Player.GetSpellDamage(target, SpellSlot.W);
                 if (Q.IsReady())
                 {
                     var qnhan = 4 - QStack;
                     
-                    dmg = dmg + ObjectManager.Player.GetSpellDamage(target, SpellSlot.Q)*qnhan + Player.GetAutoAttackDamage(target)*qnhan*(1 + passivenhan);
+                    dmg = dmg + ObjectManager.Player.GetSpellDamage(target, SpellSlot.Q)*qnhan + _Player.GetAutoAttackDamage(target)*qnhan*(1 + passivenhan);
                 }
-                dmg = dmg + Player.GetAutoAttackDamage(target)*(1 + passivenhan);
+                dmg = dmg + _Player.GetAutoAttackDamage(target)*(1 + passivenhan);
                 return dmg;
             }
             return 0;
@@ -1240,27 +1290,27 @@ namespace HoolaRiven
             {
                 float damage = 0;
                 float passivenhan;
-                if (Player.Level >= 18)
+                if (_Player.Level >= 18)
                 {
                     passivenhan = 0.5f;
                 }
-                else if (Player.Level >= 15)
+                else if (_Player.Level >= 15)
                 {
                     passivenhan = 0.45f;
                 }
-                else if (Player.Level >= 12)
+                else if (_Player.Level >= 12)
                 {
                     passivenhan = 0.4f;
                 }
-                else if (Player.Level >= 9)
+                else if (_Player.Level >= 9)
                 {
                     passivenhan = 0.35f;
                 }
-                else if (Player.Level >= 6)
+                else if (_Player.Level >= 6)
                 {
                     passivenhan = 0.3f;
                 }
-                else if (Player.Level >= 3)
+                else if (_Player.Level >= 3)
                 {
                     passivenhan = 0.25f;
                 }
@@ -1268,15 +1318,15 @@ namespace HoolaRiven
                 {
                     passivenhan = 0.2f;
                 }
-                if (HasHydra() != null) damage = damage + Player.GetAutoAttackDamage(enemy)*0.7f;
+                if (HasHydra() != null) damage = damage + _Player.GetAutoAttackDamage(enemy)*0.7f;
                 if (W.IsReady()) damage = damage + ObjectManager.Player.GetSpellDamage(enemy, SpellSlot.W);
                 if (Q.IsReady())
                 {
                     var qnhan = 4 - QStack;
                     damage = damage + ObjectManager.Player.GetSpellDamage(enemy, SpellSlot.Q)*qnhan +
-                             Player.GetAutoAttackDamage(enemy)*qnhan*(1 + passivenhan);
+                             _Player.GetAutoAttackDamage(enemy)*qnhan*(1 + passivenhan);
                 }
-                damage = damage + Player.GetAutoAttackDamage(enemy)*(1 + passivenhan);
+                damage = damage + _Player.GetAutoAttackDamage(enemy)*(1 + passivenhan);
                 if (R.IsReady())
                 {
                     return damage*1.2f + ObjectManager.Player.GetSpellDamage(enemy, SpellSlot.R);
@@ -1291,7 +1341,7 @@ namespace HoolaRiven
         {
             if (RKillable && target.IsValidTarget() && (totaldame(target) >= target.Health
                                                         && basicdmg(target) <= target.Health) ||
-                Player.CountEnemiesInRange(900) >= 2 &&
+                _Player.CountEnemiesInRange(900) >= 2 &&
                 (!target.HasBuff("kindrednodeathbuff") && !target.HasBuff("Undying Rage") &&
                  !target.HasBuff("JudicatorIntervention")))
             {
@@ -1306,27 +1356,27 @@ namespace HoolaRiven
             {
                 float dmg = 0;
                 float passivenhan;
-                if (Player.Level >= 18)
+                if (_Player.Level >= 18)
                 {
                     passivenhan = 0.5f;
                 }
-                else if (Player.Level >= 15)
+                else if (_Player.Level >= 15)
                 {
                     passivenhan = 0.45f;
                 }
-                else if (Player.Level >= 12)
+                else if (_Player.Level >= 12)
                 {
                     passivenhan = 0.4f;
                 }
-                else if (Player.Level >= 9)
+                else if (_Player.Level >= 9)
                 {
                     passivenhan = 0.35f;
                 }
-                else if (Player.Level >= 6)
+                else if (_Player.Level >= 6)
                 {
                     passivenhan = 0.3f;
                 }
-                else if (Player.Level >= 3)
+                else if (_Player.Level >= 3)
                 {
                     passivenhan = 0.25f;
                 }
@@ -1334,14 +1384,14 @@ namespace HoolaRiven
                 {
                     passivenhan = 0.2f;
                 }
-                if (HasHydra() != null) dmg = dmg + Player.GetAutoAttackDamage(target)*0.7f;
-                if (W.IsReady()) dmg = dmg + Player.GetSpellDamage(target, SpellSlot.W);
+                if (HasHydra() != null) dmg = dmg + _Player.GetAutoAttackDamage(target)*0.7f;
+                if (W.IsReady()) dmg = dmg + _Player.GetSpellDamage(target, SpellSlot.W);
                 if (Q.IsReady())
                 {
                     var qnhan = 4 - QStack;
-                    dmg = dmg + ObjectManager.Player.GetSpellDamage(target, SpellSlot.Q)*qnhan + Player.GetAutoAttackDamage(target)*qnhan*(1 + passivenhan);
+                    dmg = dmg + ObjectManager.Player.GetSpellDamage(target, SpellSlot.Q)*qnhan + _Player.GetAutoAttackDamage(target)*qnhan*(1 + passivenhan);
                 }
-                dmg = dmg + Player.GetAutoAttackDamage(target)*(1 + passivenhan);
+                dmg = dmg + _Player.GetAutoAttackDamage(target)*(1 + passivenhan);
                 if (R.IsReady())
                 {
                     var rdmg = Rdame(target, target.Health - dmg*1.2f);
@@ -1360,7 +1410,7 @@ namespace HoolaRiven
                     ? 0.75f
                     : (target.MaxHealth - health)/target.MaxHealth;
                 float pluspercent = missinghealth * (2.666667F); // 8/3
-                float rawdmg = new float[] {80, 120, 160}[R.Level - 1] + 0.6f*Player.FlatPhysicalDamageMod;
+                float rawdmg = new float[] {80, 120, 160}[R.Level - 1] + 0.6f*_Player.FlatPhysicalDamageMod;
                 return ObjectManager.Player.CalculateDamageOnUnit(target, DamageType.Physical, rawdmg*(1 + pluspercent));
             }
             return 0;
