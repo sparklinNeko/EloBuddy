@@ -14,7 +14,7 @@ namespace AutoSharp.Auto
             {
                 case GameMapId.SummonersRift:
                 {
-                   
+                    return;
                     Game.OnUpdate += args => { MyTeam.Update(); };
                     SRManager.Load();
                     break;

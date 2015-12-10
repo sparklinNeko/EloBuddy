@@ -125,7 +125,7 @@ namespace AutoSharp.Auto.SummonersRift
             }
             if (followObjectPos != Vector3.Zero)
             {
-                DecisionMaker.Goto(followObjectPos.Extend(closestAllyTurret.Position, Heroes.Player.AttackRange/2).To3D());
+                //DecisionMaker.Goto(followObjectPos.Extend(closestAllyTurret.Position, Heroes.Player.AttackRange/2).To3D());
             }
         }
 
@@ -174,7 +174,7 @@ namespace AutoSharp.Auto.SummonersRift
             }
             if (followObjectPos != Vector3.Zero)
             {
-                DecisionMaker.Goto(followObjectPos.Extend(closestAllyTurret.Position, Heroes.Player.AttackRange / 2).To3D());
+                //DecisionMaker.Goto(followObjectPos.Extend(closestAllyTurret.Position, Heroes.Player.AttackRange / 2).To3D());
             }
         }
 
@@ -223,7 +223,7 @@ namespace AutoSharp.Auto.SummonersRift
             }
             if (followObjectPos != Vector3.Zero)
             {
-                DecisionMaker.Goto(followObjectPos.Extend(closestAllyTurret.Position, Heroes.Player.AttackRange / 2).To3D());
+                //DecisionMaker.Goto(followObjectPos.Extend(closestAllyTurret.Position, Heroes.Player.AttackRange / 2).To3D());
             }
         }
 
