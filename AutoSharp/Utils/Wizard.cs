@@ -54,11 +54,11 @@ namespace AutoSharp.Utils
                 list = EntityManager.Turrets.Enemies.Where(t => t.Distance(vec) <= t.AttackRange);
             return list.Any();
         }
-        public static int CountAlliesInRange(this Vector3 pos, float range)
+ /*       public static int CountAlliesInRange(this Vector3 pos, float range)
         {
             // add h.IsMe ? 
             return EntityManager.Heroes.Allies.Count(h => h.Distance(pos) <= range);
-        }
+        }*/
         public static Obj_AI_Turret GetClosestEnemyTurret(this Vector3 point)
         {
             return Turrets.EnemyTurrets.OrderBy(t => t.Distance(point)).FirstOrDefault();
