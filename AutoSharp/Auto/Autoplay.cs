@@ -9,8 +9,8 @@ namespace AutoSharp.Auto
         public static void Load()
         {
             
-            var tempMap = GameMapId.HowlingAbyss;
-            switch (tempMap)
+            
+            switch (Game.MapId)
             {
                 case GameMapId.SummonersRift:
                 {
