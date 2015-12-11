@@ -360,9 +360,10 @@ namespace HoolaRiven
 
             if (args.Target is Obj_AI_Minion)
             {
-                if (Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.LaneClear))
+                if (Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.JungleClear))
                 {
-                    var Minions = EntityManager.MinionsAndMonsters.GetLaneMinions(EntityManager.UnitTeam.Enemy, ObjectManager.Player.Position, 190).ToArray();
+                    var Minions = EntityManager.MinionsAndMonsters.Monsters.Where(
+                    m => m.Distance(ObjectManager.Player) < 250 + _Player.AttackRange + 70).OrderBy(m => m.MaxHealth).ToArray();
                     if (Minions.Length > 0)
                     {
 
@@ -393,12 +394,12 @@ namespace HoolaRiven
                     }
                 }
             }
-            // expression is always false?
-            /*if (args.Target is Obj_AI_Turret || args.Target is Obj_Barracks || args.Target is Obj_BarracksDampener ||
+    
+            if (args.Target is Obj_AI_Turret || args.Target is Obj_Barracks || args.Target is Obj_BarracksDampener ||
                 args.Target is Obj_Building)
                 if (args.Target.IsValid && args.Target != null && Q.IsReady() && LaneQ &&
                     Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.LaneClear))
-                    ForceCastQ((Obj_AI_Base) args.Target);*/
+                    ForceCastQ((Obj_AI_Base) args.Target);
             AIHeroClient client = args.Target as AIHeroClient;
             if (client != null)
             {
@@ -709,13 +710,7 @@ namespace HoolaRiven
                 Utils.DelayAction(ForceW, 200);
 
             }
-            else
-            {
-                if (Q.IsReady())
-                {
-                    Utils.DelayAction(() => ForceCastQ(mob), 1);
-                }
-            }
+            
             
             
             
