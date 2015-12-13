@@ -329,9 +329,15 @@ namespace SamKogmaw
         private static void LimitOrbwalker()
         {
             // if w is not active (as <2.5) and forcelimit is off
-            if (W.State != SpellState.Surpressed && !Config.limitMenu.GetCheckBox("forcelimit"))
+            if (Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.Flee) || W.State != SpellState.Surpressed && !Config.limitMenu.GetCheckBox("forcelimit"))
             {
 
+                Orbwalker.DisableMovement = false;
+                return;
+            }
+            var target = TargetSelector.GetTarget(_Player.AttackRange, DamageType.Mixed);
+            if(isCombo && (target == null|| !target.IsValidTarget()))
+            {
                 Orbwalker.DisableMovement = false;
                 return;
             }
