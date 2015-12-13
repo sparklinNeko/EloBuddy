@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using EloBuddy;
+using EloBuddy.SDK;
 using EloBuddy.SDK.Events;
 
 namespace SamKogmaw
@@ -22,6 +23,7 @@ namespace SamKogmaw
 
         static void Loading_OnLoadingComplete(EventArgs args)
         {
+            Orbwalker.DisableMovement = false;
             Hacks.RenderWatermark = false;
             if (_Player.Hero != Champion.KogMaw) return;
             Config.Init();

@@ -40,13 +40,15 @@ namespace SamKogmaw
         public static void Init()
         {
             config = MainMenu.AddMenu(Program.AssemblyName, Program.AssemblyName.ToLower());
-
+            config.AddLabel("Thanks for using my Kogmaw addon, don't forget to check Movement Limit submenu");
             comboMenu = config.AddSubMenu("Combo");
-            combo.Add("aapriority", new CheckBox("Prioritize Auto Attacks over Skills"));
-            addSkillSheit(comboMenu, "combo", "q");
-            addSkillSheit(comboMenu, "combo", "w");
-            addSkillSheit(comboMenu, "combo", "e");
-            addSkillSheit(comboMenu, "combo", "r");
+            comboMenu.Add("aapriority", new CheckBox("Prioritize Auto Attacks over Skills", false));
+            //comboMenu.Add("tryburst", new CheckBox("Try bursting target with skills"));
+            addSkillSheit(comboMenu, "combo", "q", 30);
+            addSkillSheit(comboMenu, "combo", "w", 0);
+            addSkillSheit(comboMenu, "combo", "e", 40);
+            addSkillSheit(comboMenu, "combo", "r", 20);
+            comboMenu.Add("rstacks", new Slider("Maximum R stacks", 1, 1, 9));
 
             /*lasthitMenu = config.AddSubMenu("Lasthit");
             lasthitMenu.AddLabel("Lasthit unkillable minion with spells");
@@ -56,34 +58,44 @@ namespace SamKogmaw
             addSkillSheit(lasthitMenu, "lasthit", "r");*/
 
             harassMenu = config.AddSubMenu("Harass");
+            harassMenu.Add("enabled", new CheckBox("Enable harass"));
             addSkillSheit(harassMenu, "harass", "q");
+            addSkillSheit(harassMenu, "harass", "w");
             addSkillSheit(harassMenu, "harass", "e");
             addSkillSheit(harassMenu, "harass", "r");
+            harassMenu.Add("rstacks", new Slider("Maximum R stacks", 2, 1, 9));
 
             gapcloseMenu = config.AddSubMenu("Anti gapclose");
             gapcloseMenu.Add("antigapcloseenabled", new CheckBox("Enable antigapclose"));
-            addSkillSheit(gapcloseMenu, "antigapclose", "e");
+            addSkillSheit(gapcloseMenu, "antigapclose", "e", 30);
             gapcloseMenu.Add("eantigapclosedelay", new Slider("Delay before casting E", 100, 0, 500));
 
             laneclearMenu = config.AddSubMenu("Laneclear");
-            addSkillSheit(laneclearMenu, "laneclear", "q");
-            addSkillSheit(laneclearMenu, "laneclear", "w");
-            addSkillSheit(laneclearMenu, "laneclear", "e");
-            addSkillSheit(laneclearMenu, "laneclear", "r");
+            laneclearMenu.Add("enabled", new CheckBox("Enable laneclear"));
+            laneclearMenu.Add("minions", new Slider("Minimum number of minions to use spells", 3, 1, 20));
+            addSkillSheit(laneclearMenu, "laneclear", "q", 40);
+            addSkillSheit(laneclearMenu, "laneclear", "w", 30);
+            addSkillSheit(laneclearMenu, "laneclear", "e", 60);
+            addSkillSheit(laneclearMenu, "laneclear", "r", 60);
+            laneclearMenu.Add("rstacks", new Slider("Maximum R stacks", 1, 1, 9));
 
             jungleclearMenu = config.AddSubMenu("Jungleclear");
+            jungleclearMenu.Add("enabled", new CheckBox("Enable jungleclear"));
+            jungleclearMenu.Add("minions", new Slider("Minimum number of minions to use spells", 3, 1, 20));
             addSkillSheit(jungleclearMenu, "jungleclear", "q");
             addSkillSheit(jungleclearMenu, "jungleclear", "w");
             addSkillSheit(jungleclearMenu, "jungleclear", "e");
             addSkillSheit(jungleclearMenu, "jungleclear", "r");
 
             killstealMenu = config.AddSubMenu("Killsteal");
-            addSkillSheit(killstealMenu, "killsteal", "q");
-            addSkillSheit(killstealMenu, "killsteal", "w");
-            addSkillSheit(killstealMenu, "killsteal", "e");
-            addSkillSheit(killstealMenu, "killsteal", "r");
+            killstealMenu.Add("enabled", new CheckBox("Enable killsteal"));
+            addSkillSheit(killstealMenu, "killsteal", "q", 20);
+            addSkillSheit(killstealMenu, "killsteal", "e", 20);
+            addSkillSheit(killstealMenu, "killsteal", "r", 20);
+            killstealMenu.Add("rstacks", new Slider("Maximum R stacks", 2, 1, 9));
 
             interruptrecallMenu = config.AddSubMenu("Interrupt Recall");
+            interruptrecallMenu.Add("enabled", new CheckBox("Enable recall interrupter"));
 /*            addSkillSheit(interruptrecallMenu, "interruptrecall", "q");
             addSkillSheit(interruptrecallMenu, "interruptrecall", "e");*/
             addSkillSheit(interruptrecallMenu, "interruptrecall", "r");
@@ -93,9 +105,17 @@ namespace SamKogmaw
             addSkillSheit(autoharassMenu, "autoharass", "q");
             addSkillSheit(autoharassMenu, "autoharass", "e");
             addSkillSheit(autoharassMenu, "autoharass", "r");
+            autoharassMenu.Add("rstacks", new Slider("Maximum R stacks", 1, 1, 9));
             addChampSelector(autoharassMenu, "autoharass");
 
             drawMenu = config.AddSubMenu("Drawings");
+            drawMenu.Add("enabled", new CheckBox("Enable drawings"));
+            drawMenu.Add("drawready", new CheckBox("Draw only ready spells"));
+            drawMenu.Add("drawq", new CheckBox("Draw Q range"));
+            drawMenu.Add("draww", new CheckBox("Draw W range"));
+            drawMenu.Add("drawe", new CheckBox("Draw E range"));
+            drawMenu.Add("drawr", new CheckBox("Draw R range"));
+            drawMenu.Add("drawpd", new CheckBox("Draw predicted damage range"));
 
             miscMenu = config.AddSubMenu("Misc");
             
@@ -135,7 +155,7 @@ namespace SamKogmaw
                     };
                     m.Add("mmd_"+i,
                         new Slider("Delay between movements when attack speed is higher than value above",
-                            Orbwalker.MovementDelay, 0, 1000));
+                            500, 0, 2000));
  
                     //Utils.Print("adding " + i);
                 }
@@ -162,11 +182,11 @@ namespace SamKogmaw
             }
         }
 
-        private static void addSkillSheit(Menu m, string modeString, string s)
+        private static void addSkillSheit(Menu m, string modeString, string s, int def = 80)
         {
             m.AddGroupLabel(s.ToUpper());
             m.Add(s + modeString, new CheckBox("Use " + s.ToUpper()));
-            m.Add(s + modeString + "mana", new Slider("Minimum mana to use " + s.ToUpper()+" {0}%", 80, 0, 101));
+            m.Add(s + modeString + "mana", new Slider("Minimum mana to use " + s.ToUpper()+" {0}%", def, 0, 101));
             
         }
 

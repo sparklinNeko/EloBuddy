@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
 using EloBuddy;
 
 namespace SamKogmaw
@@ -7,6 +8,8 @@ namespace SamKogmaw
     {
         private const bool DebugMode = true;
         private const string HexMainColor = "#ff1990"; // System.Drawing.Color.DodgerBlue
+        
+
 
         public static void Debug<T>(T s)
         {
