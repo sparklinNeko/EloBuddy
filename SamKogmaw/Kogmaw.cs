@@ -8,7 +8,7 @@ using EloBuddy.SDK.Events;
 using EloBuddy.SDK.Menu;
 using EloBuddy.SDK.Rendering;
 using SharpDX;
-using Color = System.Drawing.Color;
+// ReSharper disable UnusedMember.Local
 
 // ReSharper disable InconsistentNaming
 
@@ -84,13 +84,13 @@ namespace SamKogmaw
             var drawE = dr ? W.IsReady() && Config.drawMenu.GetCheckBox("drawe") : Config.drawMenu.GetCheckBox("drawe");
             var drawR = dr ? R.IsReady() && Config.drawMenu.GetCheckBox("drawr") : Config.drawMenu.GetCheckBox("drawr");
             if (drawQ)
-                Circle.Draw(SharpDX.Color.DarkOliveGreen, Q.Range, pos);
+                Circle.Draw(Color.DarkOliveGreen, Q.Range, pos);
             if (drawW)
-                Circle.Draw(SharpDX.Color.DarkOliveGreen, GetMyRange(true), pos);
+                Circle.Draw(Color.DarkOliveGreen, GetMyRange(true), pos);
             if (drawE)
-                Circle.Draw(SharpDX.Color.DarkOliveGreen, E.Range, pos);
+                Circle.Draw(Color.DarkOliveGreen, E.Range, pos);
             if (drawR)
-                Circle.Draw(SharpDX.Color.DarkOliveGreen, R.Range, pos);
+                Circle.Draw(Color.DarkOliveGreen, R.Range, pos);
             if (Config.drawMenu.GetCheckBox("drawpd"))
                 DrawPredictedDamage();
         }
@@ -288,7 +288,8 @@ namespace SamKogmaw
             {"combo", Config.comboMenu},
             {"harass", Config.harassMenu},
             {"laneclear", Config.laneclearMenu},
-            {"killsteal", Config.killstealMenu}
+            {"killsteal", Config.killstealMenu},
+            {"autoharass", Config.autoharassMenu}
 
         };
         private static bool UseQ(string mode)
@@ -412,48 +413,83 @@ namespace SamKogmaw
         {
            
             if (!Config.autoharassMenu.GetCheckBox("autoharassenabled")) return;
+            // autoharass 
+            var immobile = Config.autoharassMenu.GetCheckBox("onlyimmobile");
+
             // some mode is active
             if (Orbwalker.ActiveModesFlags != Orbwalker.ActiveModes.None) return;
-            var range = R.IsReady()
-                ? rRange[R.Level - 1]
-                : E.IsReady()
+            bool useR = UseR("autoharass") &&
+                        Config.autoharassMenu.GetSlider("rstacks") > CurrentRStacks();
+            bool useE = UseE("autoharass");
+            bool useQ = UseQ("autoharass");
+            if (!useQ && !useE && !useR) return;
+            var range = useQ
+                ? Q.Range
+                : useE
                     ? E.Range
-                    : Q.IsReady() ? Q.Range : 0;
+                    : rRange[R.Level - 1];
             if (range == 0) return;
             var enemy = TargetSelector.GetTarget(range, DamageType.Magical);
             // Prioritize R over E over Q, one at a time
             
                 
                 PredictionResult pred;
-                if (R.IsReady())
+                if (useR)
                 {
-                    pred = R.GetPrediction(enemy);
-                    if (pred.HitChance >= HitChance.High && _Player.ManaPercent > Config.autoharassMenu.GetSlider("rautoharassmana") &&
-                        Config.autoharassMenu.GetSlider("rstacks") > CurrentRStacks())
+                    if (enemy.IsImmobile())
                     {
-                        Player.CastSpell(SpellSlot.R, pred.CastPosition);
-                        return;
-                    } 
-                }
-                
-                if (E.IsReady())
-                {
-                    pred = E.GetPrediction(enemy);
-                    if (pred.HitChance >= HitChance.High && _Player.ManaPercent > Config.autoharassMenu.GetSlider("eautoharassmana"))
-                    {
-                        Player.CastSpell(SpellSlot.E, pred.CastPosition);
+                        Player.CastSpell(SpellSlot.R, enemy.ServerPosition);
                         return;
                     }
+                    else if(!immobile)
+                    {
+                        pred = R.GetPrediction(enemy);
+                        if (pred.HitChance >= HitChance.High)
+                        {
+                            Player.CastSpell(SpellSlot.R, pred.CastPosition);
+                            return;
+                        }  
+                    }
+
+                    
                 }
                 
-                if (Q.IsReady())
+                if (useE)
                 {
-                    pred = Q.GetPrediction(enemy);
-                    if (pred.HitChance >= HitChance.High && _Player.ManaPercent > Config.autoharassMenu.GetSlider("qautoharassmana"))
+                    if (enemy.IsImmobile())
                     {
-                        Player.CastSpell(SpellSlot.Q, pred.CastPosition);
+                        Player.CastSpell(SpellSlot.E, enemy.ServerPosition);
                         return;
                     }
+                    else if (!immobile)
+                    {
+                        pred = E.GetPrediction(enemy);
+                        if (pred.HitChance >= HitChance.High)
+                        {
+                            Player.CastSpell(SpellSlot.E, pred.CastPosition);
+                            return;
+                        } 
+                    }
+                    
+                }
+
+                if (useQ)
+                {
+                    if (enemy.IsImmobile())
+                    {
+                        Player.CastSpell(SpellSlot.Q, enemy.ServerPosition);
+                        return;
+                    }
+                    else if (!immobile)
+                    {
+                        pred = Q.GetPrediction(enemy);
+                        if (pred.HitChance >= HitChance.High)
+                        {
+                            Player.CastSpell(SpellSlot.Q, pred.CastPosition);
+                            return;
+                        }
+                    }
+
                 }
                 
 
@@ -477,7 +513,12 @@ namespace SamKogmaw
             var aarange = GetMyRange(useW);
             var target = TargetSelector.GetTarget(aarange, DamageType.Physical);
             if (target != null && target.IsValidTarget())
+            {
                 W.Cast();
+                if(target.HealthPercent <= Config.itemMenu.GetSlider("botrkenemyhp") && _Player.HealthPercent <= Config.itemMenu.GetSlider("botrkmyhp"))
+                    ItemManager.CastBotrkOrCutlass(target);
+            }
+                
             if (Config.comboMenu.GetCheckBox("aapriority") && target != null && target.IsValidTarget(aarange))
             {
                 useQ = useQ && !ComboSkillsUsed[0];

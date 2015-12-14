@@ -22,7 +22,8 @@ namespace SamKogmaw
             killstealMenu,
             drawMenu,
             miscMenu,
-            limitMenu;
+            limitMenu,
+            itemMenu;
 
         public static bool GetCheckBox(this Menu m, string s)
         {
@@ -41,6 +42,15 @@ namespace SamKogmaw
         {
             config = MainMenu.AddMenu(Program.AssemblyName, Program.AssemblyName.ToLower());
             config.AddLabel("Thanks for using SamKogmaw addon, don't forget to check Movement Limit submenu");
+
+            itemMenu = config.AddSubMenu("Items");
+
+            itemMenu.Add("enabled", new CheckBox("Enable items usage"));
+            itemMenu.AddGroupLabel("Blade Of The Ruined King");
+            itemMenu.Add("botrkmyhp", new Slider("Self min HP %", 80));
+            itemMenu.Add("botrkenemyhp", new Slider("Enemy min HP %", 80));
+
+
             comboMenu = config.AddSubMenu("Combo");
             comboMenu.Add("aapriority", new CheckBox("Prioritize Auto Attacks over Skills", false));
             //comboMenu.Add("tryburst", new CheckBox("Try bursting target with skills"));
@@ -102,6 +112,7 @@ namespace SamKogmaw
 
             autoharassMenu = config.AddSubMenu("Auto harass");
             autoharassMenu.Add("autoharassenabled", new CheckBox("Enable autoharass", false));
+            autoharassMenu.Add("onlyimmobile", new CheckBox("Autoharass only immobile targets", true));
             addSkillSheit(autoharassMenu, "autoharass", "q");
             addSkillSheit(autoharassMenu, "autoharass", "e");
             addSkillSheit(autoharassMenu, "autoharass", "r");
