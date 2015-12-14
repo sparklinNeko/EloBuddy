@@ -20,7 +20,13 @@ namespace SamKogmaw
         {
             Loading.OnLoadingComplete += Loading_OnLoadingComplete;
         }
-
+        public static bool LagFree(int offset)
+        {
+            if (tickIndex == offset)
+                return true;
+            else
+                return false;
+        }
         static void Loading_OnLoadingComplete(EventArgs args)
         {
             Orbwalker.DisableMovement = false;
@@ -28,6 +34,16 @@ namespace SamKogmaw
             if (_Player.Hero != Champion.KogMaw) return;
             Config.Init();
             Kogmaw.Init();
+            Game.OnUpdate += Game_OnUpdate;
+        }
+        private static int tickNum = 7, tickIndex = 0;
+        static void Game_OnUpdate(EventArgs args)
+        {
+            tickIndex++;
+
+            if (tickIndex >= tickNum)
+                tickIndex = 0;
+            
         }
     }
 }

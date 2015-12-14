@@ -40,7 +40,7 @@ namespace SamKogmaw
         public static void Init()
         {
             config = MainMenu.AddMenu(Program.AssemblyName, Program.AssemblyName.ToLower());
-            config.AddLabel("Thanks for using my Kogmaw addon, don't forget to check Movement Limit submenu");
+            config.AddLabel("Thanks for using SamKogmaw addon, don't forget to check Movement Limit submenu");
             comboMenu = config.AddSubMenu("Combo");
             comboMenu.Add("aapriority", new CheckBox("Prioritize Auto Attacks over Skills", false));
             //comboMenu.Add("tryburst", new CheckBox("Try bursting target with skills"));
@@ -101,7 +101,7 @@ namespace SamKogmaw
             addSkillSheit(interruptrecallMenu, "interruptrecall", "r");
 
             autoharassMenu = config.AddSubMenu("Auto harass");
-            autoharassMenu.Add("autoharassenabled", new CheckBox("Enable autoharass"));
+            autoharassMenu.Add("autoharassenabled", new CheckBox("Enable autoharass", false));
             addSkillSheit(autoharassMenu, "autoharass", "q");
             addSkillSheit(autoharassMenu, "autoharass", "e");
             addSkillSheit(autoharassMenu, "autoharass", "r");

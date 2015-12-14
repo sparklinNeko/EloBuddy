@@ -50,7 +50,7 @@ namespace SamKogmaw
             {
                 AllowedCollisionCount = -1
             };
-            Game.OnTick += Game_OnTick;
+            Game.OnUpdate += Game_OnTick;
             Gapcloser.OnGapcloser += Gapcloser_OnGapcloser;
             Obj_AI_Base.OnBuffGain += Obj_AI_Base_OnBuffGain;
             Obj_AI_Base.OnTeleport += Obj_AI_Base_OnTeleport;
@@ -117,8 +117,8 @@ namespace SamKogmaw
 
         private static float GetComboDamage(AIHeroClient target)
         {
-            return _Player.GetSpellDamage(target, SpellSlot.R) + _Player.GetSpellDamage(target, SpellSlot.Q) +
-                   _Player.GetSpellDamage(target, SpellSlot.E) + ((1/_Player.AttackDelay))*_Player.GetAutoAttackDamage(target)/2;
+            return (R.IsReady() ? _Player.GetSpellDamage(target, SpellSlot.R) : 0) + (Q.IsReady() ? _Player.GetSpellDamage(target, SpellSlot.Q) : 0) +
+                (E.IsReady() ? _Player.GetSpellDamage(target, SpellSlot.E) : 0) + ((1/_Player.AttackDelay))*_Player.GetAutoAttackDamage(target);
         }
 
         private static void Game_OnEnd(GameEndEventArgs args)
@@ -153,7 +153,7 @@ namespace SamKogmaw
             if (_Player.IsDead || !Config.gapcloseMenu.GetCheckBox("antigapcloseenabled")) return;
             if (!Config.gapcloseMenu.GetCheckBox("eantigapclose") ||
                 (_Player.ManaPercent < Config.gapcloseMenu.GetSlider("eantigapclosemana"))) return;
-            if (sender == null || !e.Sender.IsValidTarget(E.Range)) return;
+            if (sender == null || !e.Sender.IsValidTarget(E.Range) || e.Sender.IsAlly) return;
             //if (e.Start.Distance(_Player) < e.End.Distance(_Player)) return;
 
             
@@ -163,8 +163,12 @@ namespace SamKogmaw
             else
                 CastE(sender, HitChance.High);
         }
+
+        private static int lastSkill;
         private static void CastR(Obj_AI_Base target, HitChance minimumHitchance = HitChance.Unknown)
         {
+            if (lastSkill == Core.GameTickCount) return;
+            lastSkill = Core.GameTickCount;
             if (!R.IsReady()) return;
             //Utils.Debug("Casting R");
             var hitchance = HitChance.High;
@@ -179,6 +183,8 @@ namespace SamKogmaw
         }
         private static void CastQ(Obj_AI_Base target, HitChance minimumHitchance = HitChance.Unknown)
         {
+            if (lastSkill == Core.GameTickCount) return;
+            lastSkill = Core.GameTickCount;
             if (!Q.IsReady()) return;
             //Utils.Debug("Casting Q");
             var hitchance = HitChance.High;
@@ -193,6 +199,8 @@ namespace SamKogmaw
         }
         private static void CastE(Obj_AI_Base target, HitChance minimumHitchance = HitChance.Unknown)
         {
+            if (lastSkill == Core.GameTickCount) return;
+            lastSkill = Core.GameTickCount;
             if (!E.IsReady()) return;
             //Utils.Debug("Casting E");
             var hitchance = HitChance.High;
@@ -209,14 +217,22 @@ namespace SamKogmaw
         private static void Game_OnTick(EventArgs args)
         {
             if (_Player.IsDead) return;
-            ChangeSkills();
-            LimitOrbwalker();
-            KillSteal();
-            AutoHarass();
+
+            if(Program.LagFree(0))
+                ChangeSkills();
+            if (Program.LagFree(1))
+                LimitOrbwalker();
+            if (Program.LagFree(2))
+                KillSteal();
+            if (Program.LagFree(3))
+                AutoHarass();
             
             //Utils.Debug(W.State);
+            if (Program.LagFree(4))
             if (Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.Combo)) Combo();
+            if (Program.LagFree(5))
             if (Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.LaneClear)) LaneClear();
+            if (Program.LagFree(6))
             if (Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.Harass)) Harass();
         }
 
@@ -267,7 +283,7 @@ namespace SamKogmaw
             }
         }
         // gotta rewrite this menu shit
-        private static Dictionary<string, Menu> ModeMenus = new Dictionary<string, Menu>()
+        private static readonly Dictionary<string, Menu> ModeMenus = new Dictionary<string, Menu>()
         {
             {"combo", Config.comboMenu},
             {"harass", Config.harassMenu},
@@ -404,12 +420,10 @@ namespace SamKogmaw
                     ? E.Range
                     : Q.IsReady() ? Q.Range : 0;
             if (range == 0) return;
-            var enemies = EntityManager.Heroes.Enemies.Where(
-                h => h.Distance(_Player) < range && Config.autoharassMenu.GetCheckBox(h.ChampionName+"autoharass")
-                ).OrderBy(h => h.Health);
+            var enemy = TargetSelector.GetTarget(range, DamageType.Magical);
             // Prioritize R over E over Q, one at a time
-            foreach (AIHeroClient enemy in enemies)
-            {
+            
+                
                 PredictionResult pred;
                 if (R.IsReady())
                 {
@@ -443,7 +457,7 @@ namespace SamKogmaw
                 }
                 
 
-            }
+            
         }
 
         private static void Combo()
@@ -484,16 +498,17 @@ namespace SamKogmaw
                         : aarange;
             target = TargetSelector.GetTarget(range, DamageType.Magical);
             if (target == null || !target.IsValidTarget()) return;
-            if (useR)
-            {
-                CastR(target);
-                //ComboSkillsUsed[2] = true;
-            }
             if (useE)
             {
                 CastE(target);
                 //ComboSkillsUsed[1] = true;
             }
+            if (useR)
+            {
+                CastR(target);
+                //ComboSkillsUsed[2] = true;
+            }
+            
             if (useQ)
             {
                 CastQ(target);
@@ -625,7 +640,7 @@ namespace SamKogmaw
             //if (range == 0) return;
             // todo: Maybe target selector here ?
             var enemy = TargetSelector.GetTarget(range, DamageType.Magical);
-            
+            if (enemy == null || !enemy.IsValidTarget()) return;
             if (useW)
             {
                 var target = TargetSelector.GetTarget(GetMyRange(true), DamageType.Mixed);
