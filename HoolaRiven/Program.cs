@@ -303,7 +303,7 @@ namespace HoolaRiven
             {
                 if (Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.LaneClear))
                 {
-                    var Minions = EntityManager.MinionsAndMonsters.GetJungleMonsters(ObjectManager.Player.Position, 190).ToArray();
+                    var Minions = EntityManager.MinionsAndMonsters.GetLaneMinions(EntityManager.UnitTeam.Enemy, ObjectManager.Player.Position, 190).ToArray();
                     if (Minions.Length > 0)
                     {
 
@@ -363,7 +363,7 @@ namespace HoolaRiven
                 if (Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.JungleClear))
                 {
                     var Minions = EntityManager.MinionsAndMonsters.Monsters.Where(
-                    m => m.Distance(ObjectManager.Player) < 250 + _Player.AttackRange + 70).OrderBy(m => m.MaxHealth).ToArray();
+                    m => m.Distance(ObjectManager.Player) < 250 + _Player.AttackRange + 70).ToArray();
                     if (Minions.Length > 0)
                     {
 
@@ -575,9 +575,9 @@ namespace HoolaRiven
             
             
             
-            if (Orbwalker.ActiveModesFlags == Orbwalker.ActiveModes.None
+            /*if (Orbwalker.ActiveModesFlags == Orbwalker.ActiveModes.None
                 && !FastHarassCombo
-                && !BurstCombo) return;
+                && !BurstCombo) return;*/
             /*if (LastGameTick + TickLimiter > Environment.TickCount) return;
             LastGameTick = Environment.TickCount;*/
             /* Timer.X = (int) Drawing.WorldToScreen(Player.Position).X - 60;
@@ -723,13 +723,13 @@ namespace HoolaRiven
             if (R.IsReady() && R.Name == IsFirstR && ObjectManager.Player.IsInAutoAttackRange(targetR) && AlwaysR)
             {
                 ForceR();
-                CastR1();
+                //CastR1();
             }
                 
             if (R.IsReady() && R.Name == IsFirstR && W.IsReady() && InWRange(targetR) && ComboW && AlwaysR)
             {
                 ForceR();
-                CastR1();
+                //CastR1();
                 Utils.DelayAction(ForceW, 1);
             }
             if (W.IsReady() && InWRange(targetR) && ComboW) W.Cast();
@@ -797,14 +797,14 @@ namespace HoolaRiven
                     _Player.Distance(target.Position) <= 250 + 70 + _Player.AttackRange)
                 {
                     Player.CastSpell(SpellSlot.E, target.Position);
-                    CastYoumoo();
+                   // CastYoumoo();
                     ForceR();
                     Utils.DelayAction(ForceW, 100);
                 }
                 else if (R.IsReady() && R.Name == IsFirstR && E.IsReady() && W.IsReady() && Q.IsReady() &&
                          _Player.Distance(target.Position) <= 400 + 70 + _Player.AttackRange)
                 {
-                    CastYoumoo();
+                    //CastYoumoo();
                     Player.CastSpell(SpellSlot.E, target.Position);
                     ForceR();
                     Utils.DelayAction(() => ForceCastQ(target), 150);
@@ -816,7 +816,7 @@ namespace HoolaRiven
                     
                 {
                     Player.CastSpell(SpellSlot.E, target.Position);
-                    CastYoumoo();
+                    //CastYoumoo();
                     ForceR();
                     Utils.DelayAction(FlashW, 180);
                 }
@@ -976,10 +976,16 @@ namespace HoolaRiven
         private static void ForceSkill()
         {
             if (QTarget == null || !QTarget.IsValidTarget()) return;
+            if (forceR && R.Name == IsFirstR)
+            {
+                //Chat.Print("trying to use R");
+                Player.CastSpell(SpellSlot.R);
+                return;
+            }
             if (forceQ && QTarget != null && QTarget.IsValidTarget(E.Range + _Player.BoundingRadius + 70) && Q.IsReady())
                 Player.CastSpell(SpellSlot.Q, ((Obj_AI_Base)QTarget).ServerPosition);
             if (forceW) W.Cast();
-            if (forceR && R.Name == IsFirstR) CastR1(1);//EloBuddy.Player.CastSpell(SpellSlot.R);
+            
             var hydra = HasHydra();
             if (forceItem && hydra != null && hydra.IsReady()) hydra.Cast();
             if (forceR2 && R.Name == IsSecondR)
@@ -995,7 +1001,7 @@ namespace HoolaRiven
         private static void CastR1(int delay = 0)
         {
             Chat.Print("Casting R1");
-  
+            
             Player.CastSpell(SpellSlot.R);
         }
         private static void ForceItem()
@@ -1008,6 +1014,7 @@ namespace HoolaRiven
         private static void ForceR()
         {
             forceR = (R.IsReady() && R.Name == IsFirstR);
+            //Chat.Print(forceR);
             Utils.DelayAction(() => forceR = false, 700);
         }
 

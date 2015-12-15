@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading;
 using EloBuddy;
+using EloBuddy.SDK;
 
 namespace HoolaRiven
 {
@@ -9,6 +10,7 @@ namespace HoolaRiven
     {
         public static void DelayAction(Action func, int delay)
         {
+            /*
             Timer timer = null;
             timer = new Timer(obj =>
             {
@@ -16,6 +18,8 @@ namespace HoolaRiven
                 timer.Dispose();
             },
                 null, delay, Timeout.Infinite);
+             * */
+            Core.DelayAction(func, delay);
         }
 
         public static class DelayAction2
