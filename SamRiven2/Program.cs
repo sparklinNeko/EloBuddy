@@ -5,6 +5,8 @@ using EloBuddy;
 using EloBuddy.SDK;
 using EloBuddy.SDK.Enumerations;
 using EloBuddy.SDK.Events;
+using SharpDX;
+using Color = System.Drawing.Color;
 using SamOrb = SamRiven2.Orb.Orbwalker;
 namespace SamRiven2
 {
@@ -26,7 +28,7 @@ namespace SamRiven2
         {
             return Hydra != null && Hydra.IsReady();
         }
-
+        
         private static bool CanCastTitan()
         {
             return Titan != null && Titan.IsReady();
@@ -36,7 +38,7 @@ namespace SamRiven2
         public static Spell.Active E = new Spell.Active(SpellSlot.E, 325);
         public static Spell.Skillshot R = new Spell.Skillshot(SpellSlot.R, 900, SkillShotType.Cone, 250, 1600, 45);
         public static Spell.Active W = new Spell.Active(SpellSlot.W, (uint)(70 + ObjectManager.Player.BoundingRadius + 120));
-        
+        private static string R1 = "RivenFengShuiEngine";
         static void Main(string[] args)
         {
             Hacks.RenderWatermark = false;
@@ -56,7 +58,31 @@ namespace SamRiven2
             Obj_AI_Base.OnProcessSpellCast += Obj_AI_Base_OnProcessSpellCast;
             Obj_AI_Base.OnSpellCast += Obj_AI_Base_OnSpellCast;
             Obj_AI_Base.OnSpellCast += AfterAttack;
-            
+            Drawing.OnDraw += Drawing_OnDraw;
+        }
+
+
+        private static void Drawing_OnDraw(EventArgs args)
+        {
+            var pos = Player.Instance.Position.WorldToScreen();
+            /*pos.Y += 20;
+            Drawing.DrawText(pos, Color.AntiqueWhite, Q.IsOnCooldown ? "true" : "false", 15);*/
+            pos.Y += 20;
+            Drawing.DrawText(pos, Color.AliceBlue, "ForceR: "+ Config.ForceR, 20);
+            /*if(R.IsReady())
+            foreach (var enemy in EntityManager.Heroes.Enemies)
+            {
+                if (enemy != null && enemy.Distance(Player.Instance) < 2000 && enemy.VisibleOnScreen && enemy.IsValidTarget())
+                {
+                    var epos = enemy.Position.WorldToScreen();
+                    epos.Y += 10;
+                    var damage = RDamage(enemy);
+                    if(damage > 0)
+                    Drawing.DrawText(epos, damage > enemy.Health ? Color.Green : Color.Red, damage + "", 15);
+                    epos.Y += 20;
+                 
+                }
+            }*/
         }
 
         
@@ -64,6 +90,13 @@ namespace SamRiven2
         static void Obj_AI_Base_OnSpellCast(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
         {
             if (!sender.IsMe) return;
+            Utils.Debug(args.SData.Name);
+            if (args.SData.Name == R1)
+            {
+                forceR1 = false;
+            }
+            
+            if (!Q.IsReady()) return;
             if (args.Slot == SpellSlot.W)
             {
                 forceW = false;
@@ -75,16 +108,16 @@ namespace SamRiven2
                 {
                     if (Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.Combo))
                     {
-                        Utils.Debug("CAST Q");
+                        //Utils.Debug("CAST Q");
                         Core.DelayAction(() => Player.CastSpell(SpellSlot.Q, Orbwalker.LastTarget.Position), 1);
                     }
                     if (Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.JungleClear))
                     {
-                        Utils.Debug("CAST Q");
+                        //Utils.Debug("CAST Q");
                         Core.DelayAction(() => Player.CastSpell(SpellSlot.Q, Orbwalker.LastTarget.Position), 1);
                     }
                 }
-
+                return;
             }
             if (args.SData.Name == "ItemTiamatCleave")
             {
@@ -93,33 +126,38 @@ namespace SamRiven2
                 {
                     if (Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.Combo))
                     {
-                        Utils.Debug("CAST Q");
+                        //Utils.Debug("CAST Q");
                         Core.DelayAction(() => Player.CastSpell(SpellSlot.Q, Orbwalker.LastTarget.Position), 1);
                     }
                     if (Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.JungleClear))
                     {
-                        Utils.Debug("CAST Q");
+                        //Utils.Debug("CAST Q");
                         Core.DelayAction(() => Player.CastSpell(SpellSlot.Q, Orbwalker.LastTarget.Position), 1);
                     }
                 }
+                return;
             }
+            
+            
         }
 
         private static int lastW;
         private static int lastHydra;
         private static bool forceW = false;
+        private static bool forceR1 = false;
         // Hydra -> E is faster
         static void Obj_AI_Base_OnProcessSpellCast(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
         {
             if (!sender.IsMe) return;
-            Utils.Debug(args.SData.Name);
-            if (args.SData.Name == "ItemTiamatCleave" && W.IsReady(500))
+            
+            //Utils.Debug(args.SData.Name);
+            if (args.SData.Name == "ItemTiamatCleave" && W.IsReady())
             {
                 
                 forceW = true;
                 if(W.IsReady())
                     W.Cast();
-                Core.DelayAction(()=>forceW = false, 500);
+                Core.DelayAction(()=>forceW = false,500);
                 return;
             }
             if (args.Slot == SpellSlot.W)
@@ -128,10 +166,40 @@ namespace SamRiven2
                 lastW = Core.GameTickCount;
                 if (CanCastHydra())
                     Hydra.Cast();
-                Utils.Debug(lastW - lastHydra);
-                
+                //Utils.Debug(lastW - lastHydra);
+                return;
 
             }
+            if (args.Slot == SpellSlot.E)
+            {
+                if (Config.ForceR && R.Name == R1 && R.IsReady() && Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.Combo))
+                {
+                    forceR1 = true;
+                    Player.CastSpell(SpellSlot.R);
+                    Core.DelayAction(()=>forceR1 = false, 500);
+                    return;
+                }
+                if (R.IsReady() && R.Name != R1)
+                {
+                    var enemy = EntityManager.Heroes.Enemies.FirstOrDefault(h => (h.Distance(Player.Instance) < R.Range - 50) && RDamage(h) > h.Health && h.IsValidTarget());
+                    if (enemy != null)
+                    {
+                        Player.CastSpell(SpellSlot.R, enemy.ServerPosition);
+                    }
+                }
+            }
+            if (args.Slot == SpellSlot.Q && QNum == 2)
+            {
+                if (R.IsReady() && R.Name != R1)
+                {
+                    var enemy = EntityManager.Heroes.Enemies.FirstOrDefault(h => (h.Distance(Player.Instance) < R.Range - 50) && RDamage(h) > h.Health && h.IsValidTarget());
+                    if (enemy != null)
+                    {
+                        Player.CastSpell(SpellSlot.R, enemy.ServerPosition);
+                    }
+                }
+            }
+            
             
         }
 
@@ -166,34 +234,30 @@ namespace SamRiven2
                     if (lastQ > Core.GameTickCount - 500)
                     {
                         
-                        Orbwalker.ResetAutoAttack();
+                        //Orbwalker.ResetAutoAttack();
                         //Utils.Debug("reset");
                     }
                         
                     break;
             }
             
-            if (delay != 0 && (Orbwalker.ActiveModesFlags != Orbwalker.ActiveModes.None))
+            if (delay != 0 && (Orbwalker.ActiveModesFlags != Orbwalker.ActiveModes.None || Config.AlwaysCancel))
             {
-                //Utils.Debug(delay);
                 lastQDelay = delay;
-                Core.DelayAction(DanceIfNotAborted, delay);
-                
-                    //Orbwalker.ResetAutoAttack();
-                
-                    
-                Utils.Debug("reset");
-                    
+                Orbwalker.ResetAutoAttack();
+                Core.DelayAction(DanceIfNotAborted, delay);       
+                //Utils.Debug("reset"); 
             }
  
-            if(args.Animation != "Run")
-                Utils.Debug(args.Animation);
+            //if(args.Animation != "Run")
+                //Utils.Debug(args.Animation);
         }
 
         private static void DanceIfNotAborted()
         {
             Player.DoEmote(Emote.Dance);
-            
+            //if (Orbwalker.ActiveModesFlags == Orbwalker.ActiveModes.None)
+            //    Player.IssueOrder(GameObjectOrder.MoveTo, Player.Instance.Position + (new Vector3(1.0f, 0, -1.0f)));
             Orbwalker.ResetAutoAttack();
             if (ComboTarget != null && ComboTarget.IsValidTarget(_Player.AttackRange))
             {
@@ -218,37 +282,69 @@ namespace SamRiven2
         private static void AfterAttack(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
         {
             if (!sender.IsMe) return;
+            if (args.SData.Name == "ItemTitanicHydraCleave")
+            {
+                // because we want another auto after this
+                Orbwalker.ResetAutoAttack();
+                return;
+            }
             var target = args.Target as AttackableUnit;
             if (Orbwalker.ActiveModesFlags != Orbwalker.ActiveModes.None && target != null && target.IsValidTarget())
             {
                 if (!Q.IsReady() && !W.IsReady() && CanCastHydra())
                     Hydra.Cast();
-                if (!Q.IsReady() && !W.IsReady() && CanCastTitan())
+                if (Player.Spells[0].Cooldown > 1 && !W.IsReady() && CanCastTitan())
                     Titan.Cast();
                 lastAA = Core.GameTickCount;
                 if (Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.Combo) || Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.JungleClear))
                 {
                     if ((Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.Combo)))
                     {
-                        if (QNum == 2 && W.IsReady())
+                        if (QNum >= 1 && W.IsReady())
                         {
+                            
+
                             var target2 = (ComboTarget != null && ComboTarget.IsValidTarget(WRange)) ? ComboTarget :
                             TargetSelector.GetTarget(WRange, DamageType.Physical, null, true);
+                            if (target2 != null && target2.IsValidTarget() && CanCastTitan())
+                            {
+                                Titan.Cast();
+                                Player.IssueOrder(GameObjectOrder.AttackUnit, target2);
+                                return;
+                            }
                             if (target2 != null && target2.IsValidTarget() && !CanCastHydra())
                             {
                                 Player.CastSpell(SpellSlot.W);
                                 return;
                             }
                             if (CanCastHydra())
+                            {
                                 Hydra.Cast();
+                                return;
+                            }
+                            if (R.IsReady() && R.Name != R1)
+                            {
+                                var enemy = EntityManager.Heroes.Enemies.FirstOrDefault(h => (h.Distance(Player.Instance) < R.Range - 50) && RDamage(h) > h.Health && h.IsValidTarget());
+                                if (enemy != null)
+                                {
+                                    Player.CastSpell(SpellSlot.R, enemy.ServerPosition);
+                                }
+                            }
 
                         }
                     }
                     if (Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.JungleClear))
                     {
-                        if (QNum == 2 && W.IsReady())
+                        
+                        if (QNum >= 1 && W.IsReady())
                         {
                             var target2 = (JCTarget != null && JCTarget.IsValidTarget(WRange)) ? JCTarget : EntityManager.MinionsAndMonsters.GetJungleMonsters(null, WRange, true).FirstOrDefault();
+                            if (target2 != null && target2.IsValidTarget() && CanCastTitan())
+                            {
+                                Titan.Cast();
+                                Player.IssueOrder(GameObjectOrder.AttackUnit, target2);
+                                return;
+                            }
                             if (target2 != null && target2.IsValidTarget() && !CanCastHydra())
                             {
                                 Player.CastSpell(SpellSlot.W);
@@ -261,10 +357,18 @@ namespace SamRiven2
                     }
 
 
-                    if (target != null && target.IsValidTarget() && target.IsValid && !target.IsDead && !target.IsZombie)
+                    if (target != null && target.IsValidTarget(Q.Range) && target.IsValid && !target.IsDead && !target.IsZombie)
                     {
-                        if (QNum != 2 || !W.IsReady())
+                        if (Q.IsReady())
+                        {
                             Player.CastSpell(SpellSlot.Q, target.Position);
+                            return;
+                        }
+                    }
+                    if (Player.Spells[0].Cooldown > 1 && W.IsReady() && Player.Instance.CountEnemiesInRange(WRange) > 0)
+                    {
+                        Player.CastSpell(SpellSlot.W);
+                        return;
                     }
                 }
 
@@ -314,7 +418,7 @@ namespace SamRiven2
                     }
 
                     
-                    if (target != null && target.IsValidTarget() && target.IsValid && !target.IsDead && !target.IsZombie)
+                    if (target != null && target.IsValidTarget(Q.Range) && target.IsValid && !target.IsDead && !target.IsZombie)
                     {
                         if(QNum != 2 || !W.IsReady())
                             Player.CastSpell(SpellSlot.Q, target.Position);
@@ -337,6 +441,16 @@ namespace SamRiven2
         {
             if (lastQ + 3650 < Core.GameTickCount)
                 QNum = 0;
+            if (forceW)
+            {
+                Player.CastSpell(SpellSlot.W);
+                return;
+            }
+            if (forceR1 && R.Name == R1 && R.IsReady())
+            {
+                Player.CastSpell(SpellSlot.R);
+                return;
+            }
             if (Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.Combo)) Combo();
             if (Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.JungleClear)) JungleClear();
         }
@@ -371,21 +485,41 @@ namespace SamRiven2
         private static AIHeroClient ComboTarget;
         static void Combo()
         {
-            
+            if (!Q.IsReady()) return; 
             //Utils.Debug(QNum);
-            if (Q.IsReady() && QNum == 4 && !Config.AAFirst)
+            if (Q.IsReady())
             {
-                var target = (ComboTarget != null && ComboTarget.IsValidTarget(Q.Range + Player.Instance.BoundingRadius)) ? ComboTarget :
+                var target = (ComboTarget != null && ComboTarget.IsValidTarget(Q.Range + Player.Instance.AttackRange + Player.Instance.BoundingRadius)) ? ComboTarget :
                 TargetSelector.GetTarget(Q.Range, DamageType.Physical, null, true);
-                if (target != null && target.IsValidTarget())
+                if (target != null && target.IsValidTarget() && (!Config.AAFirst || !Player.Instance.IsInAutoAttackRange(target) && (Config.QGapclose > QNum)))
                 {
                     ComboTarget = target;
                     //Utils.Debug(Q.Range);
                     //Utils.Debug(lastQ + "  "+ lastQDelay + "  <= " + lastAA);
-                        Player.CastSpell(SpellSlot.Q, target.ServerPosition);
+                    //Utils.Debug("Casting Q from combo");
+                    Player.CastSpell(SpellSlot.Q, target.ServerPosition);
                 }
             }
+            if (E.IsReady() && Q.IsReady())
+            {
+                var target = (ComboTarget != null && ComboTarget.IsValidTarget(E.Range + Q.Range + Player.Instance.BoundingRadius)) ? ComboTarget :
+                TargetSelector.GetTarget(Q.Range, DamageType.Physical, null, true);
+            }
 
+        }
+        private static double RDamage(Obj_AI_Base target)
+        {
+            
+            if (target != null && R.IsReady())
+            {
+                float missinghealth = (target.MaxHealth - target.Health) / target.MaxHealth > 0.75f
+                    ? 0.75f
+                    : (target.MaxHealth - target.Health) / target.MaxHealth;
+                float pluspercent = missinghealth * (2.666667F); // 8/3
+                float rawdmg = new float[] { 80, 120, 160 }[R.Level - 1] + 0.6f * _Player.FlatPhysicalDamageMod;
+                return Player.Instance.CalculateDamageOnUnit(target, DamageType.Physical, rawdmg * (1 + pluspercent));
+            }
+            return 0;
         }
     }
 }

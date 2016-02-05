@@ -23,28 +23,45 @@ namespace SamRiven2
         }
         public static bool ForceR
         {
-            get { return delayMenu["rforce"].Cast<KeyBind>().CurrentValue; }
+            get { return config["rforce"].Cast<KeyBind>().CurrentValue; }
         }
         public static bool BurstMode
         {
-            get { return delayMenu["burst"].Cast<KeyBind>().CurrentValue; }
+            get { return config["burst"].Cast<KeyBind>().CurrentValue; }
         }
         public static bool AAFirst
         {
             get { return config["aafirst"].Cast<CheckBox>().CurrentValue; }
+        }
+        public static bool AlwaysCancel
+        {
+            get { return config["alwayscancel"].Cast<CheckBox>().CurrentValue; }
+        }
+        public static int QGapclose
+        {
+            get { return config["qgapclose"].Cast<Slider>().CurrentValue; }
         }
         private static Menu config, delayMenu;
         public static void Init()
         {
             config = MainMenu.AddMenu(Program.AssemblyName, Program.AssemblyName.ToLower());
             config.Add("aafirst", new CheckBox("AA before Q1"));
+            config.Add("alwayscancel", new CheckBox("Cancel animation from manual Qs"));
+            config.Add("qgapclose", new Slider("Gaplose with {0}Q", 0, 0, 3));
+            
+            config.AddLabel("This one will enable gapclosing with Qs.");
+            config.AddLabel("0 means it turned off, 1 - it will use Q1, 2 - Q1 and Q2, 3 - Q1,Q2,Q3");
+            config.AddSeparator();
             delayMenu = config.AddSubMenu("Delays");
+            delayMenu.AddLabel("Make it (Default - Your average ping) or just leave like this");
+            delayMenu.AddLabel("I'll experiment with auto adding ping later");
+            config.AddSeparator();
             delayMenu.Add("q1delay", new Slider("Q1 animation reset delay {0}ms default 293", 291, 0, 500));
             delayMenu.Add("q2delay", new Slider("Q2 animation reset delay {0}ms default 293", 291, 0, 500));
             delayMenu.Add("q3delay", new Slider("Q3 animation reset delay {0}ms default 393", 393, 0, 500));
             delayMenu.Add("wdelay", new Slider("W animation reset delay {0}ms default 170", 170, 0, 500));
-            delayMenu.Add("rforce", new KeyBind("Force R", false, KeyBind.BindTypes.PressToggle, 'G'));
-            delayMenu.Add("burst", new KeyBind("Burst", false, KeyBind.BindTypes.HoldActive, 'T'));
+            config.Add("rforce", new KeyBind("Force R", false, KeyBind.BindTypes.PressToggle, 'G'));
+            config.Add("burst", new KeyBind("Burst", false, KeyBind.BindTypes.HoldActive, 'T'));
         }
     }
 }
