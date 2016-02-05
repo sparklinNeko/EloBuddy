@@ -258,7 +258,7 @@ namespace SamRiven2
             Player.DoEmote(Emote.Dance);
             //if (Orbwalker.ActiveModesFlags == Orbwalker.ActiveModes.None)
             //    Player.IssueOrder(GameObjectOrder.MoveTo, Player.Instance.Position + (new Vector3(1.0f, 0, -1.0f)));
-            Orbwalker.ResetAutoAttack();
+            //Orbwalker.ResetAutoAttack();
             if (ComboTarget != null && ComboTarget.IsValidTarget(_Player.AttackRange))
             {
                 Player.IssueOrder(GameObjectOrder.AttackUnit, ComboTarget);
