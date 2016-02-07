@@ -5,7 +5,7 @@ namespace SamRiven2
 {
     internal static class Utils
     {
-        private const bool DebugMode = false;
+        private const bool DebugMode = true;
         private const string HexMainColor = "#ff1990"; // System.Drawing.Color.DodgerBlue
 
         public static void Debug<T>(T s)
