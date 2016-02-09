@@ -53,8 +53,7 @@ namespace SamRiven2
             config.AddLabel("0 means it turned off, 1 - it will use Q1, 2 - Q1 and Q2, 3 - Q1,Q2,Q3");
             config.AddSeparator();
             delayMenu = config.AddSubMenu("Delays");
-            delayMenu.AddLabel("Make it (Default - Your average ping) or just leave like this");
-            delayMenu.AddLabel("I'll experiment with auto adding ping later");
+            delayMenu.AddLabel("It takes ping into calculations now");
             config.AddSeparator();
             delayMenu.Add("q1delay", new Slider("Q1 animation reset delay {0}ms default 293", 291, 0, 500));
             delayMenu.Add("q2delay", new Slider("Q2 animation reset delay {0}ms default 293", 291, 0, 500));

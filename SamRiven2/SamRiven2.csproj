@@ -54,7 +54,7 @@
   <ItemGroup>
     <Compile Include="Config.cs" />
     <Compile Include="ItemManager.cs" />
-    <Compile Include="Orb\Orbwalker.cs" />
+    <Compile Include="Orb\Orbwalking.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="sProgram.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -3,11 +3,11 @@ using System.Linq;
 using System.Security.AccessControl;
 using EloBuddy;
 using EloBuddy.SDK;
+using EloBuddy.SDK.Constants;
 using EloBuddy.SDK.Enumerations;
 using EloBuddy.SDK.Events;
 using SharpDX;
 using Color = System.Drawing.Color;
-using SamOrb = SamRiven2.Orb.Orbwalker;
 namespace SamRiven2
 {
     public class Program
@@ -41,7 +41,7 @@ namespace SamRiven2
         public static Spell.Active Q = new Spell.Active(SpellSlot.Q, 275);
         public static Spell.Active E = new Spell.Active(SpellSlot.E, 325);
         public static Spell.Skillshot R = new Spell.Skillshot(SpellSlot.R, 900, SkillShotType.Cone, 250, 1600, 45);
-        public static Spell.Active W = new Spell.Active(SpellSlot.W, (uint)(70 + ObjectManager.Player.BoundingRadius + 120));
+        public static Spell.Active W = new Spell.Active(SpellSlot.W, (uint)(70 + Player.Instance.BoundingRadius + 120));
         private static string R1 = "RivenFengShuiEngine";
         static void Main(string[] args)
         {
@@ -54,6 +54,8 @@ namespace SamRiven2
             if (_Player.ChampionName != "Riven") return;
             Config.Init();
             ItemManager.Init();
+
+            //var Orbwalk = new Orb.Orbwalking.Orbwalker();
             //SamOrb.Init();
             //Game.OnUpdate += Game_OnUpdate;
             Game.OnUpdate += Game_OnUpdate2;
@@ -62,7 +64,13 @@ namespace SamRiven2
             Obj_AI_Base.OnProcessSpellCast += Obj_AI_Base_OnProcessSpellCast;
             Obj_AI_Base.OnSpellCast += Obj_AI_Base_OnSpellCast;
             Obj_AI_Base.OnSpellCast += AfterAttack;
+            Orbwalker.OnPreAttack += Orbwalker_OnPreAttack;
             Drawing.OnDraw += Drawing_OnDraw;
+        }
+
+        static void Orbwalker_OnPreAttack(AttackableUnit target, Orbwalker.PreAttackArgs args)
+        {
+            Utils.Debug("Pre attack");
         }
 
 
@@ -79,7 +87,7 @@ namespace SamRiven2
         static void Obj_AI_Base_OnSpellCast(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
         {
             if (!sender.IsMe) return;
-            Utils.Debug(args.SData.Name);
+            //Utils.Debug(args.SData.Name);
             if (args.SData.Name == R1)
             {
                 forceR1 = false;
@@ -212,8 +220,20 @@ namespace SamRiven2
                     }
                 }
             }
-            
-            
+            if (args.Slot == SpellSlot.Q && QNum != 2)
+            {
+                if (Orbwalker.LastTarget != null && Orbwalker.LastTarget.IsValidTarget())
+                {
+                    Player.IssueOrder(GameObjectOrder.AttackUnit, Orbwalker.LastTarget);
+                    return;
+                }
+                if (args.Target != null && args.Target.IsValid)
+                {
+                    Player.IssueOrder(GameObjectOrder.AttackUnit, args.Target);
+                    return;
+                }
+            }
+
         }
 
 
@@ -259,25 +279,30 @@ namespace SamRiven2
             {
                 lastQDelay = delay;
                 Orbwalker.ResetAutoAttack();
-                Core.DelayAction(DanceIfNotAborted, delay);       
+                Core.DelayAction(DanceIfNotAborted, delay - Game.Ping);       
                 //Utils.Debug("reset"); 
             }
- 
-            //if(args.Animation != "Run")
-                //Utils.Debug(args.Animation);
+
+                
         }
 
+        private static void ForceQ()
+        {
+            Utils.Debug("delay " + Core.GameTickCount);
+            if (Q.IsReady())
+                Player.CastSpell(SpellSlot.Q, Game.CursorPos);
+        }
         private static void DanceIfNotAborted()
         {
             Player.DoEmote(Emote.Dance);
             //if (Orbwalker.ActiveModesFlags == Orbwalker.ActiveModes.None)
             //    Player.IssueOrder(GameObjectOrder.MoveTo, Player.Instance.Position + (new Vector3(1.0f, 0, -1.0f)));
             //Orbwalker.ResetAutoAttack();
-            if (ComboTarget != null && ComboTarget.IsValidTarget(_Player.AttackRange))
+            /*if (ComboTarget != null && ComboTarget.IsValidTarget(_Player.AttackRange))
             {
                 Player.IssueOrder(GameObjectOrder.AttackUnit, ComboTarget);
                 return;
-            }
+            }*/
             /*if (JCTarget != null && JCTarget.IsValidTarget(_Player.AttackRange))
             {
                 Player.IssueOrder(GameObjectOrder.AttackUnit, ComboTarget);
@@ -296,12 +321,15 @@ namespace SamRiven2
         private static void AfterAttack(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
         {
             if (!sender.IsMe) return;
+
             if (args.SData.Name == "ItemTitanicHydraCleave")
             {
                 // because we want another auto after this
                 Orbwalker.ResetAutoAttack();
                 return;
             }
+            if (!args.IsAutoAttack()) return;
+            Utils.Debug("ondos " + Core.GameTickCount);
             var target = args.Target as AttackableUnit;
             if (Orbwalker.ActiveModesFlags != Orbwalker.ActiveModes.None && target != null && target.IsValidTarget())
             {
@@ -462,7 +490,7 @@ namespace SamRiven2
                 Player.CastSpell(SpellSlot.W);
                 return;
             }
-            if (forceR1 && R.Name == R1 && R.IsReady())
+            if (forceR1 && R.Name == R1 && R.IsReady()) // add cast before goes on cd
             {
                 Player.CastSpell(SpellSlot.R);
                 return;
@@ -485,7 +513,7 @@ namespace SamRiven2
             {
                 Player.CastSpell(SpellSlot.W);
             }
-            if (SamOrb.ActiveModes.HasFlag(SamOrb.Modes.Combo)) Combo();
+            //if (SamOrb.ActiveModes.HasFlag(SamOrb.Modes.Combo)) Combo();
         }
 
         private static Obj_AI_Minion JCTarget;
@@ -532,7 +560,8 @@ namespace SamRiven2
             }
             if (E.IsReady())
             {
-                if (Player.Instance.CountEnemiesInRange(E.Range) > 1)
+                
+                if (_Player.CountEnemiesInRange(E.Range + Q.Range + Player.Instance.AttackRange) > 1)
                 {
                     Player.CastSpell(SpellSlot.E, Game.CursorPos);
                     return;
