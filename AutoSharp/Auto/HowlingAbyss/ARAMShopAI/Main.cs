@@ -650,7 +650,7 @@ namespace AutoSharp.Auto.HowlingAbyss.ARAMShopAI
             "Sorcerer's Shoes", "Rabadon's Deathcap", "Liandry's Torment", "Void Staff"
         };
 
-        public static string[] Tresh =
+        public static string[] Thresh =
         {
             "Face of the Mountain", "Frozen Heart",
             "Mercury's Treads", "Thornmail", "Locket of the Iron Solari", "Banshee's Veil"
