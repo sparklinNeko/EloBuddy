@@ -1028,8 +1028,8 @@ namespace AutoSharp.Auto.HowlingAbyss.ARAMShopAI
                 List = Taric;
             if (name.Equals("Teemo"))
                 List = Teemo;
-            if (name.Equals("Tresh"))
-                List = Tresh;
+            if (name.Equals("Thresh"))
+                List = Thresh;
             if (name.Equals("Tristana"))
                 List = Tristana;
             if (name.Equals("Trundle"))
