@@ -71,7 +71,7 @@ namespace AutoSharp.Utils
                 return;
             }
 
-            if (Heroes.Player.IsMelee) RandomlyChosenMove = farthestAlly.ServerPosition.Randomize(-150, 150);
+            if (Heroes.Player.IsMelee) RandomlyChosenMove = farthestAlly.ServerPosition.Randomize(-250, 250);
 
             ValidPossibleMoves.Add(farthestAlly.Position.RandomizePosition());
             //initialize the vectorlist with a position known to exist,
