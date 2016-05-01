@@ -15,7 +15,7 @@ namespace AutoSharp.Auto.HowlingAbyss
                 return true;
             }
 
-            if (Heroes.Player.HealthPercent >= 75) return false;
+            if (Heroes.Player.HealthPercent >= 65) return false;
 
             var closestEnemyBuff = HealingBuffs.EnemyBuffs.FirstOrDefault(eb => eb.IsVisible && eb.IsValid && eb.Position.Distance(Heroes.Player.Position) < 800 && (eb.Position.CountEnemiesInRange(600) == 0 || eb.Position.CountEnemiesInRange(600) < eb.Position.CountAlliesInRange(600)));
             var closestAllyBuff = HealingBuffs.AllyBuffs.FirstOrDefault(ab => ab.IsVisible && ab.IsValid);
@@ -35,7 +35,7 @@ namespace AutoSharp.Auto.HowlingAbyss
             }
 
             //stay in fight if you can't instantly gratify yourself and u don't really need the buff
-            if (Heroes.Player.HealthPercent >= 45 && Heroes.Player.CountEnemiesInRange(900) <= Player.Instance.Position.CountAlliesInRange(900) && Heroes.Player.Distance(buffPos) > 1000) return false;
+            if (Heroes.Player.HealthPercent >= 30 && Heroes.Player.CountEnemiesInRange(900) <= Player.Instance.Position.CountAlliesInRange(900) && Heroes.Player.Distance(buffPos) > 1000) return false;
 
             //IF BUFFPOS IS VECTOR ZERO OR NOT VALID SOMETHING MUST HAVE GONE WRONG
             if (!buffPos.IsValid()) return false;
@@ -76,7 +76,7 @@ namespace AutoSharp.Auto.HowlingAbyss
         {
             if (Heroes.AllyHeroes.All(h => h.IsDead) || Heroes.AllyHeroes.All(h=>h.InFountain()) || (Heroes.AllyHeroes.All(h => h.Distance(HeadQuarters.AllyHQ) < Heroes.Player.Distance(h))))
             {
-                //Chat.Print("im so lonely");
+                Chat.Print("im so lonely");
                 DecisionMaker.Goto(Wizard.GetFarthestAllyTurret().Position.RandomizePosition());
                 Orbwalker.ActiveModesFlags = Heroes.Player.Distance(Wizard.GetFarthestAllyTurret().Position) < 500
                     ? Orbwalker.ActiveModes.LaneClear
