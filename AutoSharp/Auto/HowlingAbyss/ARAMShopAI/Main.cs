@@ -310,8 +310,8 @@ namespace AutoSharp.Auto.HowlingAbyss.ARAMShopAI
 
         public static string[] Kalista =
         {
-            "Blade of the Ruined King", "The Bloodthirster", "Runaan's Hurricane (Ranged Only)",
-            "Berserker's Greaves", "Infinity Edge", "Statikk Shiv"
+            "The Black Spear", "Runaan's Hurricane (Ranged Only)", "The Bloodthirster", "Blade of the Ruined King",
+            "Berserker's Greaves", "Infinity Edge"
         };
 
         public static string[] Karma =
