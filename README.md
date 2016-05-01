@@ -1,2 +1,2 @@
 # EloBuddy
-By Sam122
+By Sam122 - Small AutoSharp fixes by Void
