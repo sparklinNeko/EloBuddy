@@ -1115,7 +1115,7 @@ namespace AutoSharp.Auto.HowlingAbyss.ARAMShopAI
         public static void BuyItems(EventArgs args)
         {
             //if (!Program.Config.Item("autosharp.shop").GetValue<bool>()) return;
-            if ((ObjectManager.Player.IsDead) && Environment.TickCount - _lastShop < 350) return;
+            if ((ObjectManager.Player.InFountain() || ObjectManager.Player.IsDead) && Environment.TickCount - _lastShop < 300) return;
             if ((Queue.Peek() != null && InventoryFull()) &&
                    (Queue.Peek().From == null ||
                     (Queue.Peek().From != null && !Queue.Peek().From.Contains(_lastItem.Id))))
