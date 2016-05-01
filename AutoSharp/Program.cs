@@ -32,7 +32,7 @@ namespace AutoSharp
             Config.AddItem(new MenuItem("autosharp.mode", "Mode").SetValue(new StringList(new[] {"AUTO", "SBTW"}))).ValueChanged +=
                 (sender, args) =>
                 {
-                    if (Config.Item("autosharp.mode").GetValue<StringList>().SelectedValue == "AUTO")
+                    if (Config.Item("autosharp.mode").GetValue<StringList>().SelectedValue == "SBTW")
                     {
                         Autoplay.Load();
                     }
