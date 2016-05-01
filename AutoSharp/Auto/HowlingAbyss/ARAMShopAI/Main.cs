@@ -490,8 +490,8 @@ namespace AutoSharp.Auto.HowlingAbyss.ARAMShopAI
 
         public static string[] Orianna =
         {
-            "Athene's Unholy Grail", "Morellonomicon",
-            "Sorcerer's Shoes", "Void Staff", "Rabadon's Deathcap", "Liandry's Torment"
+            "Athene's Unholy Grail", "Liandry's Torment",
+            "Mercury's Treads", "Void Staff", "Rylai's Crystal Scepter", "Rabadon's Deathcap"
         };
 
         public static string[] Pantheon =
@@ -593,7 +593,7 @@ namespace AutoSharp.Auto.HowlingAbyss.ARAMShopAI
         public static string[] Sivir =
         {
             "Infinity Edge", "The Bloodthirster",
-            "Berserker's Greaves", "Statikk Shiv", "Statikk Shiv", "Blade of the Ruined King"
+            "Berserker's Greaves", "Mercurial Scimitar", "Statikk Shiv", "Blade of the Ruined King"
         };
 
         public static string[] Skarner =
