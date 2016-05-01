@@ -37,7 +37,7 @@ namespace AutoSharp.Utils
 
             ValidPossibleMoves = new List<Vector3>();
 
-            if (Heroes.Player.IsMelee || Heroes.Player.AttackRange < 450)
+            if (Heroes.Player.IsMelee || Heroes.Player.AttackRange < 400)
             {
                 UseAutoSharpARAMPositioning();
             }
@@ -71,7 +71,7 @@ namespace AutoSharp.Utils
                 return;
             }
 
-            if (Heroes.Player.IsMelee) RandomlyChosenMove = farthestAlly.ServerPosition.Randomize(-250, 250);
+            if (Heroes.Player.IsMelee) RandomlyChosenMove = farthestAlly.ServerPosition.Randomize(-125, 150);
 
             ValidPossibleMoves.Add(farthestAlly.Position.RandomizePosition());
             //initialize the vectorlist with a position known to exist,
