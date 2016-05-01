@@ -32,7 +32,7 @@ namespace AutoSharp.Auto.HowlingAbyss.ARAMShopAI
 
         private static void OnUpdate(EventArgs args)
         {
-            if (ObjectManager.Player.InFountain() && Environment.TickCount - LastUpdate > 500)
+            if (ObjectManager.Player.InFountain() && Environment.TickCount - LastUpdate > 300)
             {
                 LastUpdate = Environment.TickCount;
                 Core.DelayAction(UpdateInventory, 100);
