@@ -24,8 +24,6 @@ namespace AutoSharp
         
         public static void Init()
         {
-            LeagueSharp.Common.Utility.DelayAction.Add(5000, () => Intro.Remove());
-            
             Chat.Print("AutoSharp loaded - Notice me Neko-senpai", Color.CornflowerBlue);
             Map = Game.MapId;
             //Chat.Print(Map.ToString()); // Prints Summoners Rift on Howling Abbyss
