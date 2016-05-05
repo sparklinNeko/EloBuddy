@@ -160,7 +160,7 @@ namespace AutoSharp.Auto.HowlingAbyss.ARAMShopAI
 
         public static string[] Darius =
         {
-            "The Bloodthirster", "Ravenous Hydra (Melee Only)",
+            "The Bloodthirster", "Ravenous Hydra",
             "Mercury's Treads", "Randuin's Omen", "Banshee's Veil", "Trinity Force"
         };
 
@@ -214,7 +214,7 @@ namespace AutoSharp.Auto.HowlingAbyss.ARAMShopAI
 
         public static string[] Fiora =
         {
-            "Ravenous Hydra (Melee Only)", "Statikk Shiv",
+            "Ravenous Hydra", "Statikk Shiv",
             "Ninja Tabi", "Blade of the Ruined King", "Spirit Visage", "Randuin's Omen"
         };
 
@@ -262,7 +262,7 @@ namespace AutoSharp.Auto.HowlingAbyss.ARAMShopAI
 
         public static string[] Hecarim =
         {
-            "Ravenous Hydra (Melee Only)", "Trinity Force",
+            "Ravenous Hydra", "Trinity Force",
             "Ninja Tabi", "Frozen Mallet", "Blade of the Ruined King", "Statikk Shiv"
         };
 
@@ -286,7 +286,7 @@ namespace AutoSharp.Auto.HowlingAbyss.ARAMShopAI
 
         public static string[] JarvanIV =
         {
-            "The Black Cleaver", "Ravenous Hydra (Melee Only)",
+            "The Black Cleaver", "Ravenous Hydra",
             "Mercury's Treads", "Statikk Shiv", "Warmog's Armor", "Randuin's Omen"
         };
 
@@ -310,7 +310,7 @@ namespace AutoSharp.Auto.HowlingAbyss.ARAMShopAI
 
         public static string[] Kalista =
         {
-            "The Black Spear", "Runaan's Hurricane (Ranged Only)", "The Bloodthirster", "Blade of the Ruined King",
+            "The Black Spear", "Runaan's Hurricane", "The Bloodthirster", "Blade of the Ruined King",
             "Berserker's Greaves", "Infinity Edge"
         };
 
@@ -340,7 +340,7 @@ namespace AutoSharp.Auto.HowlingAbyss.ARAMShopAI
 
         public static string[] Kayle =
         {
-            "Nashor's Tooth", "Runaan's Hurricane (Ranged Only)",
+            "Nashor's Tooth", "Runaan's Hurricane",
             "Sorcerer's Shoes", "Rabadon's Deathcap", "Liandry's Torment", "Void Staff"
         };
 
@@ -352,14 +352,14 @@ namespace AutoSharp.Auto.HowlingAbyss.ARAMShopAI
 
         public static string[] Khazix =
         {
-            "The Bloodthirster", "Ravenous Hydra (Melee Only)",
+            "The Bloodthirster", "Ravenous Hydra",
             "Ninja Tabi", "Maw of Malmortius", "Statikk Shiv", "The Black Cleaver"
         };
 
         public static string[] KogMaw =
         {
             "Infinity Edge", "The Bloodthirster",
-            "Berserker's Greaves", "Statikk Shiv", "Runaan's Hurricane (Ranged Only)", "Blade of the Ruined King"
+            "Berserker's Greaves", "Statikk Shiv", "Runaan's Hurricane", "Blade of the Ruined King"
         };
 
         public static string[] Leblanc =
@@ -370,7 +370,7 @@ namespace AutoSharp.Auto.HowlingAbyss.ARAMShopAI
 
         public static string[] LeeSin =
         {
-            "Blade of the Ruined King", "Ravenous Hydra (Melee Only)",
+            "Blade of the Ruined King", "Ravenous Hydra",
             "Mercury's Treads", "Sunfire Cape", "The Bloodthirster", "Statikk Shiv"
         };
 
@@ -472,7 +472,7 @@ namespace AutoSharp.Auto.HowlingAbyss.ARAMShopAI
 
         public static string[] Nocturne =
         {
-            "Ravenous Hydra (Melee Only)", "Blade of the Ruined King",
+            "Ravenous Hydra", "Blade of the Ruined King",
             "Berserker's Greaves", "Youmuu's Ghostblade", "Statikk Shiv", "Frozen Mallet"
         };
 
@@ -484,7 +484,7 @@ namespace AutoSharp.Auto.HowlingAbyss.ARAMShopAI
 
         public static string[] Olaf =
         {
-            "Ravenous Hydra (Melee Only)", "Blade of the Ruined King",
+            "Ravenous Hydra", "Blade of the Ruined King",
             "Mercury's Treads", "Frozen Heart", "Frozen Mallet", "Warmog's Armor"
         };
 
@@ -509,7 +509,7 @@ namespace AutoSharp.Auto.HowlingAbyss.ARAMShopAI
         public static string[] Quinn =
         {
             "Blade of the Ruined King", "The Bloodthirster",
-            "Berserker's Greaves", "Infinity Edge", "Statikk Shiv", "Runaan's Hurricane (Ranged Only)"
+            "Berserker's Greaves", "Infinity Edge", "Statikk Shiv", "Runaan's Hurricane"
         };
 
         public static string[] Rammus =
@@ -520,7 +520,7 @@ namespace AutoSharp.Auto.HowlingAbyss.ARAMShopAI
 
         public static string[] RekSai =
         {
-            "Frozen Mallet", "Ravenous Hydra (Melee Only)",
+            "Frozen Mallet", "Ravenous Hydra",
             "Mercury's Treads", "Thornmail", "Spirit Visage", "Randuin's Omen"
         };
 
@@ -532,13 +532,13 @@ namespace AutoSharp.Auto.HowlingAbyss.ARAMShopAI
 
         public static string[] Rengar =
         {
-            "Youmuu's Ghostblade", "Ravenous Hydra (Melee Only)",
+            "Youmuu's Ghostblade", "Ravenous Hydra",
             "Ninja Tabi", "Statikk Shiv", "The Black Cleaver", "Frozen Mallet"
         };
 
         public static string[] Riven =
         {
-            "Youmuu's Ghostblade", "Ravenous Hydra (Melee Only)",
+            "Youmuu's Ghostblade", "Ravenous Hydra",
             "Ionian Boots of Lucidity", "The Black Cleaver", "Statikk Shiv", "Frozen Mallet"
         };
 
@@ -562,7 +562,7 @@ namespace AutoSharp.Auto.HowlingAbyss.ARAMShopAI
 
         public static string[] Shaco =
         {
-            "Ravenous Hydra (Melee Only)", "Berserker's Greaves",
+            "Ravenous Hydra", "Berserker's Greaves",
             "Infinity Edge", "Statikk Shiv", "Trinity Force", "Youmuu's Ghostblade"
         };
 
@@ -575,7 +575,7 @@ namespace AutoSharp.Auto.HowlingAbyss.ARAMShopAI
         public static string[] Shyvana =
         {
             "Blade of the Ruined King", "Randuin's Omen",
-            "Mercury's Treads", "Spirit Visage", "Ravenous Hydra (Melee Only)", "Frozen Mallet"
+            "Mercury's Treads", "Spirit Visage", "Ravenous Hydra", "Frozen Mallet"
         };
 
         public static string[] Singed =
@@ -634,7 +634,7 @@ namespace AutoSharp.Auto.HowlingAbyss.ARAMShopAI
 
         public static string[] Talon =
         {
-            "Ravenous Hydra (Melee Only)", "Youmuu's Ghostblade",
+            "Ravenous Hydra", "Youmuu's Ghostblade",
             "Ninja Tabi", "Statikk Shiv", "Maw of Malmortius", "Frozen Mallet"
         };
 
@@ -646,7 +646,7 @@ namespace AutoSharp.Auto.HowlingAbyss.ARAMShopAI
 
         public static string[] Teemo =
         {
-            "Nashor's Tooth", "Runaan's Hurricane (Ranged Only)",
+            "Nashor's Tooth", "Runaan's Hurricane",
             "Sorcerer's Shoes", "Rabadon's Deathcap", "Liandry's Torment", "Void Staff"
         };
 
@@ -664,13 +664,13 @@ namespace AutoSharp.Auto.HowlingAbyss.ARAMShopAI
 
         public static string[] Trundle =
         {
-            "Ravenous Hydra (Melee Only)", "Spirit Visage",
+            "Ravenous Hydra", "Spirit Visage",
             "Mercury's Treads", "Randuin's Omen", "Banshee's Veil", "Thornmail"
         };
 
         public static string[] Tryndamere =
         {
-            "Statikk Shiv", "Ravenous Hydra (Melee Only)",
+            "Statikk Shiv", "Ravenous Hydra",
             "Berserker's Greaves", "The Black Cleaver", "Statikk Shiv", "Mercurial Scimitar"
         };
 
@@ -755,7 +755,7 @@ namespace AutoSharp.Auto.HowlingAbyss.ARAMShopAI
         public static string[] MonkeyKing =
         {
             "Youmuu's Ghostblade", "The Black Cleaver",
-            "Ninja Tabi", "Maw of Malmortius", "Statikk Shiv", "Ravenous Hydra (Melee Only)"
+            "Ninja Tabi", "Maw of Malmortius", "Statikk Shiv", "Ravenous Hydra"
         };
 
         public static string[] Xerath =
@@ -767,7 +767,7 @@ namespace AutoSharp.Auto.HowlingAbyss.ARAMShopAI
         public static string[] XinZhao =
         {
             "Blade of the Ruined King", "Youmuu's Ghostblade",
-            "Mercury's Treads", "Infinity Edge", "Ravenous Hydra (Melee Only)", "Randuin's Omen"
+            "Mercury's Treads", "Infinity Edge", "Ravenous Hydra", "Randuin's Omen"
         };
 
         public static string[] Yasuo =
