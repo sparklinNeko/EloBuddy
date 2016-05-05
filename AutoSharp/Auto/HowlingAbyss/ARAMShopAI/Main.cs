@@ -208,7 +208,7 @@ namespace AutoSharp.Auto.HowlingAbyss.ARAMShopAI
 
         public static string[] FiddleSticks =
         {
-            "Athene's Unholy Grail", "Will of the Ancients",
+            "Athene's Unholy Grail", "Spirit Visage",
             "Sorcerer's Shoes", "Void Staff", "Rabadon's Deathcap", "Liandry's Torment"
         };
 
@@ -436,7 +436,7 @@ namespace AutoSharp.Auto.HowlingAbyss.ARAMShopAI
 
         public static string[] Mordekaiser =
         {
-            "Will of the Ancients", "Rabadon's Deathcap",
+            "Abyssal Scepter", "Rabadon's Deathcap",
             "Sorcerer's Shoes", "Spirit Visage", "Zhonya's Hourglass", "Liandry's Torment"
         };
 
@@ -544,14 +544,14 @@ namespace AutoSharp.Auto.HowlingAbyss.ARAMShopAI
 
         public static string[] Rumble =
         {
-            "Will of the Ancients", "Rabadon's Deathcap",
+            "Rod of Ages", "Rabadon's Deathcap",
             "Sorcerer's Shoes", "Spirit Visage", "Zhonya's Hourglass", "Liandry's Torment"
         };
 
         public static string[] Ryze =
         {
             "Archangel's Staff", "Rod of Ages", "Frozen Heart", "Sorcerer's Shoes",
-            "Void Staff", "Will of the Ancients"
+            "Void Staff", "Zhonya's Hourglass"
         };
 
         public static string[] Sejuani =
@@ -616,7 +616,7 @@ namespace AutoSharp.Auto.HowlingAbyss.ARAMShopAI
 
         public static string[] Swain =
         {
-            "Athene's Unholy Grail", "Will of the Ancients",
+            "Athene's Unholy Grail", "Zhonya's Hourglass",
             "Sorcerer's Shoes", "Rod of Ages", "Rabadon's Deathcap", "Liandry's Torment"
         };
 
@@ -736,7 +736,7 @@ namespace AutoSharp.Auto.HowlingAbyss.ARAMShopAI
 
         public static string[] Vladimir =
         {
-            "Will of the Ancients", "Rabadon's Deathcap",
+            "Warmog's Armor", "Rabadon's Deathcap",
             "Sorcerer's Shoes", "Spirit Visage", "Zhonya's Hourglass", "Liandry's Torment"
         };
 
