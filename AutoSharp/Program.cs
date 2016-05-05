@@ -10,7 +10,6 @@ using EloBuddy.SDK.Menu;
 using EloBuddy.SDK.Menu.Values;
 using SharpDX;
 using Color = System.Drawing.Color;
-using AutoSharp.Properties;
 // ReSharper disable ObjectCreationAsStatement
 
 namespace AutoSharp
@@ -19,25 +18,12 @@ namespace AutoSharp
     {
         public static GameMapId Map;
         public static Menu Config;
-        private static Render.Sprite Intro;
         
         private static bool _loaded = false;
 
-        private static System.Drawing.Bitmap LoadImg(string imgName)
-             {
-                var bitmap = Resources.ResourceManager.GetObject(imgName) as System.Drawing.Bitmap;
-                if (bitmap == null)
-                {
-                Console.WriteLine(imgName + ".png not found.");
-            }
-            return bitmap;
-        }
         
         public static void Init()
         {
-        	Intro = new Render.Sprite(LoadImg("ASLogo"), new Vector2((Drawing.Width / 2) - 175, (Drawing.Height / 2) - 300));
-            Intro.Add(0);
-            Intro.OnDraw();
             LeagueSharp.Common.Utility.DelayAction.Add(5000, () => Intro.Remove());
             
             Chat.Print("AutoSharp loaded - Notice me Neko-senpai", Color.CornflowerBlue);
