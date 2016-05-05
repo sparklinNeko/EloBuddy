@@ -76,7 +76,7 @@ namespace AutoSharp.Auto.HowlingAbyss
         {
             if (Heroes.AllyHeroes.All(h => h.IsDead) || Heroes.AllyHeroes.All(h=>h.InFountain()) || (Heroes.AllyHeroes.All(h => h.Distance(HeadQuarters.AllyHQ) < Heroes.Player.Distance(h))))
             {
-                Chat.Print("cuck");
+                //Chat.Print("cuck");
                 DecisionMaker.Goto(Wizard.GetFarthestAllyTurret().Position.RandomizePosition());
                 Orbwalker.ActiveModesFlags = Heroes.Player.Distance(Wizard.GetFarthestAllyTurret().Position) < 750
                     ? Orbwalker.ActiveModes.LaneClear
