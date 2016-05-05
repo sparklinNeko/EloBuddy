@@ -24,7 +24,7 @@ namespace AutoSharp
 
         public static void Init()
         {
-            Chat.Print("AutoSharp loaded", Color.CornflowerBlue);
+            Chat.Print("AutoSharp loaded - Notice me Neko-senpai", Color.CornflowerBlue);
             Map = Game.MapId;
             //Chat.Print(Map.ToString()); // Prints Summoners Rift on Howling Abbyss
             /*
