@@ -38,7 +38,6 @@ namespace AutoSharp
         public static void Init()
         {
 			
-			Loader.Menu();
 
             if (Loader.intro)
             {
