@@ -8,10 +8,8 @@ using EloBuddy;
 using EloBuddy.SDK;
 using EloBuddy.SDK.Menu;
 using EloBuddy.SDK.Menu.Values;
-using EloBuddy.SDK.Events;
 using SharpDX;
 using Color = System.Drawing.Color;
-using LeagueSharp.Common;
 using PortAIO.Properties;
 // ReSharper disable ObjectCreationAsStatement
 
