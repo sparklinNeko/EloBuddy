@@ -23,7 +23,8 @@ namespace AutoSharp
         public static Menu Config;
         
         private static bool _loaded = false;
-
+		private static Render.Sprite Intro;
+        private static float IntroTimer = Game.Time;
 		private static System.Drawing.Bitmap LoadImg(string imgName)
         {
             var bitmap = Resources.ResourceManager.GetObject(imgName) as System.Drawing.Bitmap;
