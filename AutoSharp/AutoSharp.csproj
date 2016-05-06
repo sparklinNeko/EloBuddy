@@ -113,6 +113,7 @@
     <Compile Include="Utils\Positioning.cs" />
     <Compile Include="Utils\Wizard.cs" />
     <Compile Include="Utils\Geometry.cs" />
+	<Compile Include="Utils\Loader.cs" />
 	<Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
