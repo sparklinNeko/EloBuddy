@@ -40,13 +40,13 @@ namespace AutoSharp
         {
 			
 
-            if (Loader.intro)
-            {
+            //if (Loader.intro)
+            //{
                 Intro = new Render.Sprite(LoadImg("ASLogo"), new Vector2((Drawing.Width / 2) - 175, (Drawing.Height / 2) - 300));
                 Intro.Add(0);
                 Intro.OnDraw();
                 LeagueSharp.Common.Utility.DelayAction.Add(5000, () => Intro.Remove());
-            }
+            //}
 			
             Chat.Print("AutoSharp loaded - Notice me Neko-senpai", Color.CornflowerBlue);
             Map = Game.MapId;
