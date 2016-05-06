@@ -125,9 +125,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Plugins\" />
-	<Folder Include="Properties\" />
 	<Folder Include="Resources\" />
-	<Folder Include="Utils\" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">
