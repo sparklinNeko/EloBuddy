@@ -79,16 +79,6 @@ namespace PortAIO.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap denymouse {
-            get {
-                object obj = ResourceManager.GetObject("denymouse", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Menu Loaded.
         /// </summary>
         internal static string Diana_Initialize_Menu_Loaded {
@@ -158,56 +148,6 @@ namespace PortAIO.Properties {
                 return ResourceManager.GetString("display3", resourceCulture);
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap intro {
-            get {
-                object obj = ResourceManager.GetObject("intro", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Minimap_Ward_Green_Enemy {
-            get {
-                object obj = ResourceManager.GetObject("Minimap_Ward_Green_Enemy", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Minimap_Ward_Pink_Enemy {
-            get {
-                object obj = ResourceManager.GetObject("Minimap_Ward_Pink_Enemy", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap mouse1 {
-            get {
-                object obj = ResourceManager.GetObject("mouse1", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap mouse2 {
-            get {
-                object obj = ResourceManager.GetObject("mouse2", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
 		
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
@@ -225,26 +165,6 @@ namespace PortAIO.Properties {
         internal static string Program_Load_Error_initialitzing_TheBrand__ {
             get {
                 return ResourceManager.GetString("Program_Load_Error_initialitzing_TheBrand__", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap RecallBar {
-            get {
-                object obj = ResourceManager.GetObject("RecallBar", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap ScopeSprite {
-            get {
-                object obj = ResourceManager.GetObject("ScopeSprite", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
             }
         }
     }

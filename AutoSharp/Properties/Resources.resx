@@ -118,30 +118,6 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="denymouse" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\denymouse.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="intro" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\intro.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="mouse1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\mouse1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="mouse2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\mouse2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="RecallBar" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\RecallBar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Minimap_Ward_Green_Enemy" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Minimap_Ward_Green_Enemy.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Minimap_Ward_Pink_Enemy" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Minimap_Ward_Pink_Enemy.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ScopeSprite" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ScopeSprite.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="ASLogo" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ASLogo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
