@@ -112,7 +112,7 @@ namespace AutoSharp.Auto.HowlingAbyss.ARAMShopAI
 
         public static string[] Bard =
         {
-            "Talisman of Ascension", "Frozen Heart",
+            "Talisman of Ascension", "Sunfire Cape",
             "Mercury's Treads", "Luden's Echo", "Mikael's Crucible", "Ardent Censer"
         };
 
@@ -431,7 +431,7 @@ namespace AutoSharp.Auto.HowlingAbyss.ARAMShopAI
         public static string[] MissFortune =
         {
             "Infinity Edge", "Statikk Shiv", "The Bloodthirster",
-            "Berserker's Greaves", "Infinity Edge", "Runaan's Hurricane", "Frozen Mallet"
+            "Berserker's Greaves", "Runaan's Hurricane", "Frozen Mallet"
         };
 
         public static string[] Mordekaiser =
@@ -658,8 +658,8 @@ namespace AutoSharp.Auto.HowlingAbyss.ARAMShopAI
 
         public static string[] Tristana =
         {
-            "Infinity Edge", "The Bloodthirster",
-            "Berserker's Greaves", "Runaan's Hurricane", "Statikk Shiv", "Blade of the Ruined King"
+            "Runaan's Hurricane", "The Bloodthirster",
+            "Berserker's Greaves", "Infinity Edge", "Statikk Shiv", "Blade of the Ruined King"
         };
 
         public static string[] Trundle =
