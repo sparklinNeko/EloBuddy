@@ -112,6 +112,7 @@
     <Compile Include="Auto\SummonersRift\Map.cs" />
     <Compile Include="Auto\SummonersRift\Shopping.cs" />
     <Compile Include="Auto\SummonersRift\SRManager.cs" />
+	<Compile Include="Utils\Loader.cs" />
     <Compile Include="Program.cs" />
 	<Compile Include="Properties\Resources.Designer.cs">
     </Compile>
@@ -127,7 +128,6 @@
     <Compile Include="Utils\Positioning.cs" />
     <Compile Include="Utils\Wizard.cs" />
     <Compile Include="Utils\Geometry.cs" />
-	<Compile Include="Utils\Loader.cs" />
   </ItemGroup>
    <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
