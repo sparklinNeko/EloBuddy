@@ -101,7 +101,7 @@ namespace AutoSharp.Auto.HowlingAbyss.ARAMShopAI
         public static string[] Ashe =
         {
             "Blade of the Ruined King", "The Bloodthirster",
-            "Berserker's Greaves", "Infinity Edge", "Statikk Shiv", "Statikk Shiv"
+            "Berserker's Greaves", "Infinity Edge", "Runaan's Hurricane", "Statikk Shiv"
         };
 
         public static string[] Azir =
@@ -113,7 +113,7 @@ namespace AutoSharp.Auto.HowlingAbyss.ARAMShopAI
         public static string[] Bard =
         {
             "Talisman of Ascension", "Frozen Heart",
-            "Boots of Mobility", "Locket of the Iron Solari", "Mikael's Crucible", "Ardent Censer"
+            "Mercury's Treads", "Luden's Echo", "Mikael's Crucible", "Ardent Censer"
         };
 
         public static string[] Blitzcrank =
@@ -137,7 +137,7 @@ namespace AutoSharp.Auto.HowlingAbyss.ARAMShopAI
         public static string[] Caitlyn =
         {
             "Blade of the Ruined King", "The Bloodthirster",
-            "Berserker's Greaves", "Infinity Edge", "Statikk Shiv", "Statikk Shiv"
+            "Berserker's Greaves", "Infinity Edge", "Runaan's Hurricane", "Statikk Shiv"
         };
 
         public static string[] Cassiopeia =
@@ -173,19 +173,19 @@ namespace AutoSharp.Auto.HowlingAbyss.ARAMShopAI
         public static string[] DrMundo =
         {
             "Warmog's Armor", "Liandry's Torment",
-            "Mercury's Treads", "Abyssal Scepter", "Thornmail", "Warmog's Armor"
+            "Mercury's Treads", "Abyssal Scepter", "Thornmail", "Banshee's Veil"
         };
 
         public static string[] Draven =
         {
             "Blade of the Ruined King", "The Bloodthirster",
-            "Berserker's Greaves", "Infinity Edge", "Statikk Shiv", "Statikk Shiv"
+            "Berserker's Greaves", "Infinity Edge", "Statikk Shiv", "Frozen Mallet"
         };
 
         public static string[] Ekko =
         {
-            "Athene's Unholy Grail", "Morellonomicon",
-            "Sorcerer's Shoes", "Rabadon's Deathcap", "Void Staff", "Lich Bane"
+            "Lich Bane", "Morellonomicon",
+            "Sorcerer's Shoes", "Rabadon's Deathcap", "Abyssal Scepter", "Frozen Mallet"
         };
 
         public static string[] Elise =
@@ -196,8 +196,8 @@ namespace AutoSharp.Auto.HowlingAbyss.ARAMShopAI
 
         public static string[] Evelynn =
         {
-            "Rylai's Crystal Scepter", "Liandry's Torment",
-            "Sorcerer's Shoes", "Abyssal Scepter", "Zhonya's Hourglass", "Rabadon's Deathcap"
+            "Athene's Unholy Grail", "Liandry's Torment",
+            "Sorcerer's Shoes", "Zhonya's Hourglass", "Rylai's Crystal Scepter", "Rabadon's Deathcap"
         };
 
         public static string[] Ezreal =
@@ -220,7 +220,7 @@ namespace AutoSharp.Auto.HowlingAbyss.ARAMShopAI
 
         public static string[] Fizz =
         {
-            "Lich Bane", "Void Staff", "Rabadon's Deathcap",
+            "Lich Bane", "Liandry's Torment", "Rabadon's Deathcap",
             "Sorcerer's Shoes", "Zhonya's Hourglass", "Luden's Echo"
         };
 
@@ -233,7 +233,7 @@ namespace AutoSharp.Auto.HowlingAbyss.ARAMShopAI
         public static string[] Gangplank =
         {
             "Blade of the Ruined King", "The Bloodthirster",
-            "Berserker's Greaves", "Infinity Edge", "Statikk Shiv", "Statikk Shiv"
+            "Berserker's Greaves", "Infinity Edge", "Statikk Shiv", "Frozen Mallet"
         };
 
         public static string[] Garen =
@@ -257,7 +257,7 @@ namespace AutoSharp.Auto.HowlingAbyss.ARAMShopAI
         public static string[] Graves =
         {
             "Blade of the Ruined King", "The Bloodthirster",
-            "Berserker's Greaves", "Infinity Edge", "Statikk Shiv", "Statikk Shiv"
+            "Berserker's Greaves", "Infinity Edge", "Statikk Shiv", "Frozen Mallet"
         };
 
         public static string[] Hecarim =
@@ -305,7 +305,7 @@ namespace AutoSharp.Auto.HowlingAbyss.ARAMShopAI
         public static string[] Jinx =
         {
             "Blade of the Ruined King", "The Bloodthirster",
-            "Berserker's Greaves", "Infinity Edge", "Statikk Shiv", "Statikk Shiv"
+            "Berserker's Greaves", "Infinity Edge", "Runaan's Hurricane", "Statikk Shiv"
         };
 
         public static string[] Kalista =
@@ -328,14 +328,14 @@ namespace AutoSharp.Auto.HowlingAbyss.ARAMShopAI
 
         public static string[] Kassadin =
         {
-            "Athene's Unholy Grail", "Morellonomicon",
-            "Sorcerer's Shoes", "Rod of Ages", "Void Staff", "Rabadon's Deathcap"
+            "Athene's Unholy Grail", "Zhonya's Hourglass",
+            "Sorcerer's Shoes", "Rod of Ages", "Abyssal Scepter", "Rabadon's Deathcap"
         };
 
         public static string[] Katarina =
         {
             "Liandry's Torment", "Void Staff", "Rabadon's Deathcap",
-            "Sorcerer's Shoes", "Hextech Gunblade", "Luden's Echo"
+            "Sorcerer's Shoes", "Abyssal Scepter", "Luden's Echo"
         };
 
         public static string[] Kayle =
@@ -389,7 +389,7 @@ namespace AutoSharp.Auto.HowlingAbyss.ARAMShopAI
         public static string[] Lucian =
         {
             "Infinity Edge", "Statikk Shiv", "The Bloodthirster",
-            "Berserker's Greaves", "Statikk Shiv", "Blade of the Ruined King"
+            "Berserker's Greaves", "Maw of Malmortius", "Blade of the Ruined King"
         };
 
         public static string[] Lulu =
@@ -424,14 +424,14 @@ namespace AutoSharp.Auto.HowlingAbyss.ARAMShopAI
 
         public static string[] MasterYi =
         {
-            "Infinity Edge", "Statikk Shiv",
-            "The Bloodthirster", "Statikk Shiv", "Statikk Shiv", "Frozen Mallet"
+            "Infinity Edge", "Sunfire Cape",
+            "The Bloodthirster", "The Black Cleaver", "Statikk Shiv", "Frozen Mallet"
         };
 
         public static string[] MissFortune =
         {
             "Infinity Edge", "Statikk Shiv", "The Bloodthirster",
-            "Berserker's Greaves", "Infinity Edge", "Statikk Shiv", "Frozen Mallet"
+            "Berserker's Greaves", "Infinity Edge", "Runaan's Hurricane", "Frozen Mallet"
         };
 
         public static string[] Mordekaiser =
@@ -442,8 +442,8 @@ namespace AutoSharp.Auto.HowlingAbyss.ARAMShopAI
 
         public static string[] Morgana =
         {
-            "Athene's Unholy Grail", "Morellonomicon",
-            "Sorcerer's Shoes", "Void Staff", "Rabadon's Deathcap", "Abyssal Scepter",
+            "Athene's Unholy Grail", "Abyssal Scepter",
+            "Sorcerer's Shoes", "Void Staff", "Liandry's Torment", "Rabadon's Deathcap",
         };
 
         public static string[] Nami =
@@ -478,7 +478,7 @@ namespace AutoSharp.Auto.HowlingAbyss.ARAMShopAI
 
         public static string[] Nunu =
         {
-            "Athene's Unholy Grail", "Morellonomicon",
+            "Athene's Unholy Grail", "Sunfire Cape",
             "Ninja Tabi", "Rod of Ages", "Abyssal Scepter", "Rylai's Crystal Scepter"
         };
 
@@ -503,7 +503,7 @@ namespace AutoSharp.Auto.HowlingAbyss.ARAMShopAI
         public static string[] Poppy =
         {
             "Trinity Force", "Banshee's Veil",
-            "Ionian Boots of Lucidity", "Frozen Heart", "Hextech Gunblade", "Void Staff",
+            "Ionian Boots of Lucidity", "Frozen Heart", "Sunfire Cape", "Void Staff",
         };
 
         public static string[] Quinn =
@@ -604,14 +604,14 @@ namespace AutoSharp.Auto.HowlingAbyss.ARAMShopAI
 
         public static string[] Sona =
         {
-            "Athene's Unholy Grail", "Morellonomicon",
+            "Athene's Unholy Grail", "Ardent Censer",
             "Sorcerer's Shoes", "Rabadon's Deathcap", "Void Staff", "Luden's Echo"
         };
 
         public static string[] Soraka =
         {
-            "Athene's Unholy Grail", "Morellonomicon",
-            "Sorcerer's Shoes", "Rabadon's Deathcap", "Void Staff", "Luden's Echo"
+            "Athene's Unholy Grail", "Ardent Censer",
+            "Mercury's Treads", "Rabadon's Deathcap", "Void Staff", "Luden's Echo"
         };
 
         public static string[] Swain =
@@ -659,7 +659,7 @@ namespace AutoSharp.Auto.HowlingAbyss.ARAMShopAI
         public static string[] Tristana =
         {
             "Infinity Edge", "The Bloodthirster",
-            "Berserker's Greaves", "Statikk Shiv", "Statikk Shiv", "Blade of the Ruined King"
+            "Berserker's Greaves", "Runaan's Hurricane", "Statikk Shiv", "Blade of the Ruined King"
         };
 
         public static string[] Trundle =
@@ -683,7 +683,7 @@ namespace AutoSharp.Auto.HowlingAbyss.ARAMShopAI
         public static string[] Twitch =
         {
             "Blade of the Ruined King", "The Bloodthirster",
-            "Berserker's Greaves", "Infinity Edge", "Statikk Shiv", "Statikk Shiv"
+            "Berserker's Greaves", "Infinity Edge", "Runaan's Hurricane", "Statikk Shiv"
         };
 
         public static string[] Udyr =
@@ -701,13 +701,13 @@ namespace AutoSharp.Auto.HowlingAbyss.ARAMShopAI
         public static string[] Varus =
         {
             "Blade of the Ruined King", "The Bloodthirster",
-            "Berserker's Greaves", "Infinity Edge", "Statikk Shiv", "Statikk Shiv"
+            "Berserker's Greaves", "Infinity Edge", "Statikk Shiv", "Frozen Mallet"
         };
 
         public static string[] Vayne =
         {
             "Blade of the Ruined King", "The Bloodthirster",
-            "Berserker's Greaves", "Infinity Edge", "Statikk Shiv", "Statikk Shiv"
+            "Berserker's Greaves", "Infinity Edge", "Statikk Shiv", "Frozen Mallet"
         };
 
         public static string[] Veigar =
@@ -802,7 +802,7 @@ namespace AutoSharp.Auto.HowlingAbyss.ARAMShopAI
 
         public static string[] Zilean =
         {
-            "Athene's Unholy Grail", "Morellonomicon",
+            "Athene's Unholy Grail", "Mikael's Crucible",
             "Sorcerer's Shoes", "Rabadon's Deathcap", "Void Staff", "Luden's Echo"
         };
 
