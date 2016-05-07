@@ -44,7 +44,7 @@ namespace AutoSharp
 
             //if (Loader.intro)
             //{
-                Intro = new Render.Sprite(LoadImg("ASLogo"), new Vector2((Drawing.Width / 2) - 175, (Drawing.Height / 2) - 300));
+                Intro = new Render.Sprite(LoadImg("ASLogo"), new Vector2((Drawing.Width / 2) - 283, (Drawing.Height / 2) - 87));
                 Intro.Add(0);
                 Intro.OnDraw();
                 LeagueSharp.Common.Utility.DelayAction.Add(5000, () => Intro.Remove());
