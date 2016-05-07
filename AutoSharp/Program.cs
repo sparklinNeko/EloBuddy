@@ -6,10 +6,15 @@ using AutoSharp.Auto;
 using AutoSharp.Utils;
 using EloBuddy;
 using EloBuddy.SDK;
+using EloBuddy.SDK.Enumerations;
+using EloBuddy.SDK.Events;
 using EloBuddy.SDK.Menu;
 using EloBuddy.SDK.Menu.Values;
 using SharpDX;
 using Color = System.Drawing.Color;
+using AutoSharp.Properties;
+using PortAIO.Utility;
+using LeagueSharp.Common;
 // ReSharper disable ObjectCreationAsStatement
 
 namespace AutoSharp
@@ -20,10 +25,31 @@ namespace AutoSharp
         public static Menu Config;
         
         private static bool _loaded = false;
+		private static Render.Sprite Intro;
+        private static float IntroTimer = Game.Time;
+		private static System.Drawing.Bitmap LoadImg(string imgName)
+        {
+            var bitmap = Resources.ResourceManager.GetObject(imgName) as System.Drawing.Bitmap;
+            if (bitmap == null)
+            {
+                Console.WriteLine(imgName + ".png not found.");
+            }
+            return bitmap;
+        }
 
         
         public static void Init()
         {
+			
+
+            //if (Loader.intro)
+            //{
+                Intro = new Render.Sprite(LoadImg("ASLogo"), new Vector2((Drawing.Width / 2) - 283, (Drawing.Height / 2) - 87));
+                Intro.Add(0);
+                Intro.OnDraw();
+                LeagueSharp.Common.Utility.DelayAction.Add(5000, () => Intro.Remove());
+            //}
+			
             Chat.Print("AutoSharp loaded - Notice me Neko-senpai", Color.CornflowerBlue);
             Map = Game.MapId;
             //Chat.Print(Map.ToString()); // Prints Summoners Rift on Howling Abbyss
