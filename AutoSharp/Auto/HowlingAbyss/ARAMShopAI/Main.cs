@@ -64,8 +64,8 @@ namespace AutoSharp.Auto.HowlingAbyss.ARAMShopAI
 
         public static string[] Ahri =
         {
-            "Athene's Unholy Grail", "Morellonomicon",
-            "Sorcerer's Shoes", "Void Staff", "Rabadon's Deathcap", "Liandry's Torment"
+            "Liandry's Torment", "Morellonomicon",
+            "Sorcerer's Shoes", "Void Staff", "Zhonya's Hourglass", "Rabadon's Deathcap"
         };
 
         public static string[] Akali =
@@ -88,13 +88,13 @@ namespace AutoSharp.Auto.HowlingAbyss.ARAMShopAI
 
         public static string[] Anivia =
         {
-            "Athene's Unholy Grail", "Morellonomicon",
+            "Luden's Echo", "Morellonomicon",
             "Sorcerer's Shoes", "Void Staff", "Rabadon's Deathcap", "Liandry's Torment"
         };
 
         public static string[] Annie =
         {
-            "Athene's Unholy Grail", "Morellonomicon",
+            "Morellonomicon", "Rylai's Crystal Scepter",
             "Sorcerer's Shoes", "Void Staff", "Rabadon's Deathcap", "Luden's Echo"
         };
 
@@ -106,7 +106,7 @@ namespace AutoSharp.Auto.HowlingAbyss.ARAMShopAI
 
         public static string[] Azir =
         {
-            "Athene's Unholy Grail", "Morellonomicon",
+            "Nashor's Tooth", "Morellonomicon",
             "Sorcerer's Shoes", "Rabadon's Deathcap", "Rylai's Crystal Scepter", "Luden's Echo"
         };
 
@@ -124,7 +124,7 @@ namespace AutoSharp.Auto.HowlingAbyss.ARAMShopAI
 
         public static string[] Brand =
         {
-            "Athene's Unholy Grail", "Morellonomicon",
+            "Luden's Echo", "Morellonomicon",
             "Sorcerer's Shoes", "Void Staff", "Rabadon's Deathcap", "Liandry's Torment"
         };
 
@@ -143,7 +143,7 @@ namespace AutoSharp.Auto.HowlingAbyss.ARAMShopAI
         public static string[] Cassiopeia =
         {
             "Archangel's Staff", "Liandry's Torment",
-            "Sorcerer's Shoes", "Rabadon's Deathcap", "Zhonya's Hourglass", "Luden's Echo"
+            "Morellonomicon", "Rabadon's Deathcap", "Zhonya's Hourglass", "Luden's Echo"
         };
 
         public static string[] Chogath =
@@ -190,13 +190,13 @@ namespace AutoSharp.Auto.HowlingAbyss.ARAMShopAI
 
         public static string[] Elise =
         {
-            "Liandry's Torment", "Athene's Unholy Grail",
+            "Liandry's Torment", "Zhonya's Hourglass",
             "Sorcerer's Shoes", "Rylai's Crystal Scepter", "Rabadon's Deathcap", "Void Staff",
         };
 
         public static string[] Evelynn =
         {
-            "Athene's Unholy Grail", "Liandry's Torment",
+            "Morellonomicon", "Liandry's Torment",
             "Sorcerer's Shoes", "Zhonya's Hourglass", "Rylai's Crystal Scepter", "Rabadon's Deathcap"
         };
 
@@ -208,7 +208,7 @@ namespace AutoSharp.Auto.HowlingAbyss.ARAMShopAI
 
         public static string[] FiddleSticks =
         {
-            "Athene's Unholy Grail", "Spirit Visage",
+            "Morellonomicon", "Spirit Visage",
             "Sorcerer's Shoes", "Void Staff", "Rabadon's Deathcap", "Liandry's Torment"
         };
 
@@ -226,7 +226,7 @@ namespace AutoSharp.Auto.HowlingAbyss.ARAMShopAI
 
         public static string[] Galio =
         {
-            "Athene's Unholy Grail", "Abyssal Scepter",
+            "Rod of Ages", "Abyssal Scepter",
             "Mercury's Treads", "Zhonya's Hourglass", "Spirit Visage", "Thornmail"
         };
 
@@ -268,7 +268,7 @@ namespace AutoSharp.Auto.HowlingAbyss.ARAMShopAI
 
         public static string[] Heimerdinger =
         {
-            "Athene's Unholy Grail", "Morellonomicon",
+            "Rod of Ages", "Morellonomicon",
             "Sorcerer's Shoes", "Void Staff", "Rabadon's Deathcap", "Liandry's Torment"
         };
 
@@ -322,13 +322,13 @@ namespace AutoSharp.Auto.HowlingAbyss.ARAMShopAI
 
         public static string[] Karthus =
         {
-            "Athene's Unholy Grail", "Morellonomicon",
+            "Rod of Ages", "Morellonomicon",
             "Sorcerer's Shoes", "Void Staff", "Rabadon's Deathcap", "Zhonya's Hourglass"
         };
 
         public static string[] Kassadin =
         {
-            "Athene's Unholy Grail", "Zhonya's Hourglass",
+            "Morellonomicon", "Zhonya's Hourglass",
             "Sorcerer's Shoes", "Rod of Ages", "Abyssal Scepter", "Rabadon's Deathcap"
         };
 
@@ -364,7 +364,7 @@ namespace AutoSharp.Auto.HowlingAbyss.ARAMShopAI
 
         public static string[] Leblanc =
         {
-            "Athene's Unholy Grail", "Morellonomicon",
+            "Morellonomicon", "Abyssal Scepter",
             "Sorcerer's Shoes", "Rabadon's Deathcap", "Void Staff", "Luden's Echo"
         };
 
@@ -382,8 +382,8 @@ namespace AutoSharp.Auto.HowlingAbyss.ARAMShopAI
 
         public static string[] Lissandra =
         {
-            "Athene's Unholy Grail", "Morellonomicon",
-            "Sorcerer's Shoes", "Rod of Ages", "Rabadon's Deathcap", "Liandry's Torment"
+            "Rod of Ages", "Morellonomicon",
+            "Sorcerer's Shoes", "Void Staff", "Rabadon's Deathcap", "Liandry's Torment"
         };
 
         public static string[] Lucian =
@@ -400,7 +400,7 @@ namespace AutoSharp.Auto.HowlingAbyss.ARAMShopAI
 
         public static string[] Lux =
         {
-            "Athene's Unholy Grail", "Morellonomicon",
+            "Luden's Echo", "Morellonomicon",
             "Sorcerer's Shoes", "Void Staff", "Rabadon's Deathcap", "Zhonya's Hourglass"
         };
 
@@ -412,7 +412,7 @@ namespace AutoSharp.Auto.HowlingAbyss.ARAMShopAI
 
         public static string[] Malzahar =
         {
-            "Athene's Unholy Grail", "Morellonomicon",
+            "Morellonomicon", "Banshee's Veil",
             "Sorcerer's Shoes", "Void Staff", "Rabadon's Deathcap", "Liandry's Torment"
         };
 
@@ -466,8 +466,8 @@ namespace AutoSharp.Auto.HowlingAbyss.ARAMShopAI
 
         public static string[] Nidalee =
         {
-            "Athene's Unholy Grail", "Morellonomicon",
-            "Sorcerer's Shoes", "Rabadon's Deathcap", "Void Staff", "Luden's Echo"
+            "Luden's Echo", "Morellonomicon",
+            "Sorcerer's Shoes", "Rabadon's Deathcap", "Void Staff", "Rylai's Crystal Scepter"
         };
 
         public static string[] Nocturne =
@@ -478,7 +478,7 @@ namespace AutoSharp.Auto.HowlingAbyss.ARAMShopAI
 
         public static string[] Nunu =
         {
-            "Athene's Unholy Grail", "Sunfire Cape",
+            "Ravenous Hydra", "Sunfire Cape",
             "Ninja Tabi", "Rod of Ages", "Abyssal Scepter", "Rylai's Crystal Scepter"
         };
 
@@ -490,7 +490,7 @@ namespace AutoSharp.Auto.HowlingAbyss.ARAMShopAI
 
         public static string[] Orianna =
         {
-            "Athene's Unholy Grail", "Liandry's Torment",
+            "Rod of Ages", "Liandry's Torment",
             "Mercury's Treads", "Void Staff", "Rylai's Crystal Scepter", "Rabadon's Deathcap"
         };
 
@@ -616,14 +616,14 @@ namespace AutoSharp.Auto.HowlingAbyss.ARAMShopAI
 
         public static string[] Swain =
         {
-            "Athene's Unholy Grail", "Zhonya's Hourglass",
-            "Sorcerer's Shoes", "Rod of Ages", "Rabadon's Deathcap", "Liandry's Torment"
+            "Rod of Ages", "Zhonya's Hourglass",
+            "Sorcerer's Shoes", "Morellonomicon", "Rabadon's Deathcap", "Liandry's Torment"
         };
 
         public static string[] Syndra =
         {
-            "Athene's Unholy Grail", "Morellonomicon",
-            "Sorcerer's Shoes", "Rod of Ages", "Rabadon's Deathcap", "Void Staff"
+            "Morellonomicon", "Rod of Ages",
+            "Sorcerer's Shoes", "Luden's Echo", "Rabadon's Deathcap", "Void Staff"
         };
 
         public static string[] TahmKench =
@@ -676,7 +676,7 @@ namespace AutoSharp.Auto.HowlingAbyss.ARAMShopAI
 
         public static string[] TwistedFate =
         {
-            "Athene's Unholy Grail", "Morellonomicon",
+            "Rod of Ages", "Morellonomicon",
             "Sorcerer's Shoes", "Rabadon's Deathcap", "Void Staff", "Luden's Echo"
         };
 
@@ -712,13 +712,13 @@ namespace AutoSharp.Auto.HowlingAbyss.ARAMShopAI
 
         public static string[] Veigar =
         {
-            "Athene's Unholy Grail", "Morellonomicon",
+            "Morellonomicon", "Luden's Echo",
             "Sorcerer's Shoes", "Void Staff", "Rabadon's Deathcap", "Zhonya's Hourglass"
         };
 
         public static string[] Velkoz =
         {
-            "Athene's Unholy Grail", "Morellonomicon",
+            "Morellonomicon", "Zhonya's Hourglass",
             "Sorcerer's Shoes", "Rabadon's Deathcap", "Rylai's Crystal Scepter", "Luden's Echo"
         };
 
@@ -730,7 +730,7 @@ namespace AutoSharp.Auto.HowlingAbyss.ARAMShopAI
 
         public static string[] Viktor =
         {
-            "Athene's Unholy Grail", "Morellonomicon",
+            "Morellonomicon", "Zhonya's Hourglass",
             "Sorcerer's Shoes", "Perfect Hex Core", "Rabadon's Deathcap", "Void Staff"
         };
 
@@ -760,7 +760,7 @@ namespace AutoSharp.Auto.HowlingAbyss.ARAMShopAI
 
         public static string[] Xerath =
         {
-            "Athene's Unholy Grail", "Morellonomicon",
+            "Morellonomicon", "Liandry's Torment",
             "Sorcerer's Shoes", "Rabadon's Deathcap", "Void Staff", "Luden's Echo"
         };
 
@@ -796,19 +796,19 @@ namespace AutoSharp.Auto.HowlingAbyss.ARAMShopAI
 
         public static string[] Ziggs =
         {
-            "Athene's Unholy Grail", "Morellonomicon",
+            "Luden's Echo", "Morellonomicon",
             "Sorcerer's Shoes", "Void Staff", "Rabadon's Deathcap", "Liandry's Torment"
         };
 
         public static string[] Zilean =
         {
-            "Athene's Unholy Grail", "Mikael's Crucible",
+            "Morellonomicon", "Mikael's Crucible",
             "Sorcerer's Shoes", "Rabadon's Deathcap", "Void Staff", "Luden's Echo"
         };
 
         public static string[] Zyra =
         {
-            "Athene's Unholy Grail", "Morellonomicon",
+            "Luden's Echo", "Morellonomicon",
             "Sorcerer's Shoes", "Rabadon's Deathcap", "Liandry's Torment", "Rylai's Crystal Scepter"
         };
 
