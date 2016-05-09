@@ -14,7 +14,6 @@ using SharpDX;
 using Color = System.Drawing.Color;
 using AutoSharp.Properties;
 using PortAIO.Utility;
-using LeagueSharp.Common;
 // ReSharper disable ObjectCreationAsStatement
 
 namespace AutoSharp
